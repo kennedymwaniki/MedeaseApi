@@ -1,0 +1,189 @@
+### 1. Create Admin User
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "email": "mwangiken128@gmail.com",
+  "password": "admin123456",
+  "role": "admin",
+  "firstname": "System",
+  "lastname": "Administrator"
+}
+
+### 2. Create Doctor User
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "email": "kennedymwaniki089@gmail.com",
+  "password": "doctor123456",
+  "role": "doctor",
+  "firstname": "Dr John",
+  "lastname": "Smith"
+}
+
+### 3. Create Patient User
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "email": "kennedymwas4@gmail.com",
+  "password": "patient123456",
+  "role": "patient",
+  "firstname": "Patient Jane",
+  "lastname": "Doe"
+}
+
+### 4. Login Admin User
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "mwangiken128@gmail.com",
+  "password": "admin123456"
+}
+
+### 5. Login Doctor User
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "kennedymwaniki089@gmail.com",
+  "password": "doctor123456"
+}
+
+### 6. Login Patient User
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "patient.doe@medease.com",
+  "password": "patient123456"
+}
+
+### 7. Get All Users (to get user IDs for relationships)
+GET http://localhost:8000/users/12
+### 8. Create Doctor Profile (use the doctor user ID from step 2/7)
+POST http://localhost:8000/doctors
+Content-Type: application/json
+
+{
+  "specialization": "Cardiology",
+  "experience": 15,
+  "userId": 12,
+  "contact": "+1-555-0123",
+  "isAvailable": true,
+  "affiliation": "Full-time"
+}
+
+### 9. Create Patient Profile (use the patient user ID from step 3/7)
+POST http://localhost:8000/patients
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "age": 28,
+  "userId": 13,
+  "gender": "Female",
+  "contact": "+1-555-0456",
+  "address": "123 Main Street, Springfield, IL 62701"
+}
+
+### 10. Create Additional Patient User
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "email": "patient.wilson@medease.com",
+  "password": "patient123456",
+  "role": "patient",
+  "firstname": "Robert",
+  "lastname": "Wilson"
+}
+
+### 11. Create Additional Patient Profile
+POST http://localhost:8000/patients
+Content-Type: application/json
+
+{
+  "name": "Robert Wilson",
+  "age": 45,
+  "userId": 4,
+  "gender": "Male",
+  "contact": "+1-555-0789",
+  "address": "456 Oak Avenue, Springfield, IL 62702"
+}
+
+### 12. Create Medication
+POST http://localhost:8000/medications
+Content-Type: application/json
+
+{
+  "name": "Lisinopril",
+  "description": "ACE inhibitor for high blood pressure",
+  "manufacturer": "Generic Pharma",
+  "category": "Cardiovascular"
+}
+
+### 13. Create Prescription (use patient ID and medication ID)
+POST http://localhost:8000/prescriptions
+Content-Type: application/json
+
+{
+  "frequency": "Once daily",
+  "duration": "30 days",
+  "dosage": "10mg",
+  "status": "Active",
+  "startDate": "2025-07-02",
+  "endDate": "2025-08-01",
+  "patientId": 1,
+  "medicationId": 1
+}
+
+### 14. Create Appointment (use patient ID and doctor ID)
+POST http://localhost:8000/appointments
+Content-Type: application/json
+
+{
+  "appointmentDate": "2025-07-15",
+  "appointmentTime": "10:00",
+  "status": "Scheduled",
+  "reason": "Routine cardiac checkup",
+  "patientId": 1,
+  "doctorId": 1
+}
+
+### 15. Create Medical History (use patient ID)
+POST http://localhost:8000/medical-history
+Content-Type: application/json
+
+{
+  "symptoms": "Chest pain, shortness of breath",
+  "diagnosis": "Hypertension",
+  "treatment": "Medication and lifestyle changes",
+  "notes": "Patient has family history of heart disease",
+  "patientId": 1
+}
+
+### 16. Create Medication Stock
+POST http://localhost:8000/medication-stock
+Content-Type: application/json
+
+{
+  "quantity": 500,
+  "expiryDate": "2026-06-30",
+  "batchNumber": "LIS2025001",
+  "medicationId": 1
+}
+
+### 17. Verify Created Data - Get All Patients with Relations
+GET http://localhost:8000/patients
+
+### 18. Verify Created Data - Get All Doctors with Relations
+GET http://localhost:8000/doctors
+
+### 19. Verify Created Data - Get All Prescriptions
+GET http://localhost:8000/prescriptions
+
+### 20. Verify Created Data - Get All Appointments
+GET http://localhost:8000/appointments
