@@ -9,6 +9,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { PaymentStatus } from '../paymentStatus';
 
 @Entity('payments')
 export class Payment {
@@ -33,8 +34,12 @@ export class Payment {
     description: 'Status of the payment',
     example: 'Pending',
   })
-  @Column()
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: PaymentStatus,
+    default: PaymentStatus.PENDING,
+  })
+  status: PaymentStatus;
 
   @ApiProperty({
     description: 'Date of the payment',

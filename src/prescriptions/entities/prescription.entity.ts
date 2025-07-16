@@ -4,6 +4,8 @@ import { Patient } from 'src/patients/entities/patient.entity';
 import { Payment } from 'src/payments/entities/payment.entity';
 import { Column, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Entity } from 'typeorm/decorator/entity/Entity';
+import { prescriptionStatus } from '../prescriptionStatues';
+import { Doctor } from 'src/doctors/entities/doctor.entity';
 
 @Entity('prescriptions')
 export class Prescription {
@@ -35,8 +37,12 @@ export class Prescription {
     description: 'Status of the prescription',
     example: 'Active',
   })
-  @Column()
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: prescriptionStatus,
+    default: prescriptionStatus.ACTIVE,
+  })
+  status: prescriptionStatus;
 
   @ApiProperty({
     description: 'Start date of the prescription',
@@ -60,4 +66,7 @@ export class Prescription {
 
   @ManyToOne(() => Medication, (medication) => medication.prescriptions)
   medication: Medication;
+
+  @ManyToOne(() => Doctor, (doctor) => doctor.prescriptions)
+  doctor: Doctor;
 }

@@ -1,12 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
 // import { join } from 'path';
 // import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new ConsoleLogger({
+      prefix: 'MyApp', // Default is "Nest"
+      logLevels: ['log', 'error', 'warn', 'debug', 'verbose'],
+      colors: true,
+      timestamp: true,
+      json: true,
+    }),
+  });
 
   app.enableCors({
     origin: '*', // Adjust this to your needs
@@ -35,6 +43,7 @@ async function bootstrap() {
     .addTag('medication-stock')
     .addTag('prescriptions')
     .addTag('appointments')
+    .addBearerAuth()
     .addTag('medical-history')
     .addServer('http://localhost:8000', 'Local Development Server') // Add server URL
     .addServer('https://api.example.com', 'Production Server') // Add production server URL

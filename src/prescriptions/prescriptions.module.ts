@@ -5,6 +5,7 @@ import { PrescriptionsController } from './prescriptions.controller';
 import { Prescription } from './entities/prescription.entity';
 import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
 import { MedicationsModule } from 'src/medications/medications.module';
+import { DoctorsModule } from 'src/doctors/doctors.module';
 
 @Module({
   controllers: [PrescriptionsController],
@@ -13,6 +14,7 @@ import { MedicationsModule } from 'src/medications/medications.module';
   imports: [
     PatientsModule,
     MedicationsModule,
+    DoctorsModule,
     TypeOrmModule.forFeature([Prescription]),
   ],
 })

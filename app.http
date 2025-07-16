@@ -15,26 +15,26 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "email": "kennedymwaniki089@gmail.com",
+  "email": "mwanikikennedy93@gmail.com",
   "password": "doctor123456",
   "role": "doctor",
-  "firstname": "Dr John",
+  "firstname": "Dr kenny",
   "lastname": "Smith"
 }
 
-### 3. Create Patient User
+## 3. Create Patient User
 POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "email": "kennedymwas4@gmail.com",
+  "email": "kennedymwas8@gmail.com",
   "password": "patient123456",
   "role": "patient",
   "firstname": "Patient Jane",
   "lastname": "Doe"
 }
 
-### 4. Login Admin User
+### 4. Login Admin User // Admin
 POST http://localhost:8000/auth/login
 Content-Type: application/json
 
@@ -70,7 +70,7 @@ Content-Type: application/json
 {
   "specialization": "Cardiology",
   "experience": 15,
-  "userId": 12,
+  "userId": 15,
   "contact": "+1-555-0123",
   "isAvailable": true,
   "affiliation": "Full-time"
@@ -83,7 +83,7 @@ Content-Type: application/json
 {
   "name": "Jane Doe",
   "age": 28,
-  "userId": 13,
+  "userId": 3,
   "gender": "Female",
   "contact": "+1-555-0456",
   "address": "123 Main Street, Springfield, IL 62701"
@@ -171,7 +171,7 @@ Content-Type: application/json
 
 {
   "quantity": 500,
-  "expiryDate": "2026-06-30",
+  "expiryDate": "2025-04-30",
   "batchNumber": "LIS2025001",
   "medicationId": 1
 }
@@ -187,3 +187,7 @@ GET http://localhost:8000/prescriptions
 
 ### 20. Verify Created Data - Get All Appointments
 GET http://localhost:8000/appointments
+
+
+
+POST http://localhost:8000/doctors

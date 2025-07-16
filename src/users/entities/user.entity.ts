@@ -39,6 +39,9 @@ export class User {
   @Column({ type: 'text', nullable: true, default: null })
   hashedRefreshToken?: string | null;
 
+  @Column({ type: 'text', nullable: true, default: null })
+  imagelink?: string | null;
+
   @OneToOne(() => Patient, (patient) => patient.user, {
     eager: true,
   })

@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsPositive,
   IsString,
 } from 'class-validator';
+import { prescriptionStatus } from '../prescriptionStatues';
 
 export class CreatePrescriptionDto {
   @ApiProperty({
@@ -38,7 +40,8 @@ export class CreatePrescriptionDto {
   })
   @IsString()
   @IsNotEmpty()
-  status: string;
+  @IsEnum(prescriptionStatus)
+  status: prescriptionStatus;
 
   @ApiProperty({
     description: 'Start date of the prescription',
@@ -61,6 +64,14 @@ export class CreatePrescriptionDto {
   @IsNumber()
   @IsPositive()
   patientId: number;
+
+  @ApiProperty({
+    description: 'ID of the doctor associated with the prescription',
+    example: 1,
+  })
+  @IsNumber()
+  @IsPositive()
+  doctorId: number;
 
   @ApiProperty({
     description: 'ID of the medication associated with the prescription',

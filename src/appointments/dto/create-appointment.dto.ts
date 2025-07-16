@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
+import { AppointmentStatus } from '../appointmentEnum';
 
 export class CreateAppointmentDto {
   @ApiProperty({
@@ -24,7 +32,8 @@ export class CreateAppointmentDto {
   })
   @IsString()
   @IsNotEmpty()
-  status: string;
+  @IsEnum(AppointmentStatus)
+  status: AppointmentStatus = AppointmentStatus.PENDING;
 
   @ApiProperty({
     description: 'Duration of the appointment in minutes',
@@ -57,4 +66,22 @@ export class CreateAppointmentDto {
   @IsNumber()
   @IsPositive()
   doctorId: number;
+
+  @ApiProperty({
+    description: 'Zoom meeting ID associated with the appointment',
+    example: '123456789',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  user_url?: string;
+
+  @ApiProperty({
+    description: 'Zoom meeting URL for the appointment for the admin',
+    example: 'https://zoom.us/s/123456789',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  admin_url?: string;
 }

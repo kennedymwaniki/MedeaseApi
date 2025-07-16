@@ -18,7 +18,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TasksModule } from './tasks/tasks.module';
 // import { TasksModule } from './tasks/tasks.module';
 import { UploadsModule } from './uploads/uploads.module';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from './auth/guards/AccessTokenGuard';
+// import { ChatModule } from './chat/chat.module';
+import { DoctorTimeSlotModule } from './doctor-time-slot/doctor-time-slot.module';
 
 @Module({
   imports: [
@@ -58,13 +61,16 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
     TasksModule,
 
     UploadsModule,
+
+    DoctorTimeSlotModule,
   ],
   controllers: [AppController],
-  providers: [AppService, 
+  providers: [
+    AppService,
     {
-    provide: APP_GUARD,
-    useClass: AuthModule, // Assuming you have an AuthGuard in AuthModule
-  }
-],
+      provide: APP_GUARD,
+      useClass: AccessTokenGuard,
+    },
+  ],
 })
 export class AppModule {}

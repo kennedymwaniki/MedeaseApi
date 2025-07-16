@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsPositive,
   IsString,
 } from 'class-validator';
+import { PaymentStatus } from '../paymentStatus';
 
 export class CreatePaymentDto {
   @ApiProperty({
@@ -30,7 +32,8 @@ export class CreatePaymentDto {
   })
   @IsString()
   @IsNotEmpty()
-  status: string;
+  @IsEnum(PaymentStatus)
+  status: PaymentStatus;
 
   @ApiProperty({
     description: 'Date of the payment',

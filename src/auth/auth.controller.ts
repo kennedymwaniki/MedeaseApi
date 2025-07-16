@@ -14,6 +14,7 @@ import { ApiOperation } from '@nestjs/swagger';
 import { PasswordResetRequestDto } from './dto/resetRequestDto';
 import { CreateAuthDto } from './dto/lgon.dto';
 import { ResetPasswordDto } from './dto/resetPasswordDto';
+import { Public } from './decorators/public.decorators';
 
 export interface RequestWithUser extends Request {
   user: {
@@ -27,6 +28,7 @@ export interface RequestWithUser extends Request {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('login')
   login(@Body() body: CreateAuthDto) {
     return this.authService.login(body);

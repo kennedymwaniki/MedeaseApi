@@ -68,4 +68,9 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   hashedRefreshToken?: string | null;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  imagelink?: string | null;
 }

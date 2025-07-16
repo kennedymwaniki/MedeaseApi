@@ -46,8 +46,6 @@ export class UsersService {
 
   findAll() {
     return this.userRepository.find({
-      
-    
       relations: ['patient', 'doctor'],
     });
   }
@@ -55,16 +53,17 @@ export class UsersService {
   async findOne(id: number) {
     const user = await this.userRepository.findOne({
       where: { id },
-      select:{
+      select: {
         id: true,
         email: true,
         role: true,
         otp: true,
+        imagelink: true,
         secret: true,
         firstname: true,
         hashedRefreshToken: true,
-        doctor:true,  
-        patient:true,
+        doctor: true,
+        patient: true,
       },
       relations: ['patient', 'doctor'],
     });
@@ -99,7 +98,18 @@ export class UsersService {
           `User with ID ${id} not found after update`,
         );
       }
-      return updatedUser;
+      return {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        otp: updatedUser.otp,
+        imagelink: updatedUser.imagelink,
+        secret: updatedUser.secret,
+        firstname: updatedUser.firstname,
+        hashedRefreshToken: updatedUser.hashedRefreshToken,
+        doctor: updatedUser.doctor,
+        patient: updatedUser.patient,
+      };
     });
   }
 

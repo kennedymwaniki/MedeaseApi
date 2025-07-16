@@ -15,7 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RolesGuard } from 'src/auth/guards/RoleGuard';
 import { Roles } from 'src/auth/decorators/roles.decorators';
 import { UserRole } from './enums/roleEnums';
-
+import { Public } from 'src/auth/decorators/public.decorators';
 
 @UseGuards(RolesGuard)
 @ApiTags('users')
@@ -25,6 +25,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @Public()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
