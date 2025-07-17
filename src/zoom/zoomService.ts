@@ -48,7 +48,7 @@ export class ZoomService {
   ) {
     const accessToken = await this.getAccessToken();
     const url = 'https://api.zoom.us/v2/users/me/meetings';
-
+    //
     try {
       interface ZoomMeetingResponse {
         join_url: string;

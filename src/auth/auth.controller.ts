@@ -8,6 +8,7 @@ import {
   Query,
   Req,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation } from '@nestjs/swagger';
@@ -15,6 +16,8 @@ import { PasswordResetRequestDto } from './dto/resetRequestDto';
 import { CreateAuthDto } from './dto/lgon.dto';
 import { ResetPasswordDto } from './dto/resetPasswordDto';
 import { Public } from './decorators/public.decorators';
+import { RefreshTokenGuard } from './guards/RefreshTokenGuard';
+import { AccessTokenGuard } from './guards/AccessTokenGuard';
 
 export interface RequestWithUser extends Request {
   user: {
@@ -34,11 +37,13 @@ export class AuthController {
     return this.authService.login(body);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Get('signout/:id')
   signOut(@Param('id') id: number) {
     return this.authService.signOut(id);
   }
 
+  @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   refreshTokens(
     @Query('id', ParseIntPipe) id: number,
