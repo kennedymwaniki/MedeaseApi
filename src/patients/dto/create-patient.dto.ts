@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
-import { IsNotEmpty, IsNumber, IsString, IsPositive } from 'class-validator';
+import { IsNumber, IsString, IsPositive, IsOptional } from 'class-validator';
 
 export class CreatePatientDto {
   @ApiProperty({
@@ -7,8 +7,8 @@ export class CreatePatientDto {
     example: 'John Doe',
   })
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  @IsOptional()
+  name?: string;
 
   @ApiProperty({
     description: 'Age of the patient',
@@ -16,7 +16,8 @@ export class CreatePatientDto {
   })
   @IsNumber()
   @IsPositive()
-  age: number;
+  @IsOptional()
+  age?: number;
 
   @ApiProperty({
     description: 'User ID of the patient',
@@ -31,22 +32,22 @@ export class CreatePatientDto {
     example: 'Male',
   })
   @IsString()
-  @IsNotEmpty()
-  gender: string;
+  @IsOptional()
+  gender?: string;
 
   @ApiProperty({
     description: 'Contact information of the patient',
     example: '123-456-7890',
   })
   @IsString()
-  @IsNotEmpty()
-  contact: string;
+  @IsOptional()
+  contact?: string;
 
   @ApiProperty({
     description: 'Address of the patient',
     example: '123 Main St, Anytown, USA',
   })
   @IsString()
-  @IsNotEmpty()
-  address: string;
+  @IsOptional()
+  address?: string;
 }

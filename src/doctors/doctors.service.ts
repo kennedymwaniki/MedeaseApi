@@ -1,28 +1,31 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { UpdateDoctorDto } from './dto/update-doctor.dto';
-import { Doctor } from './entities/doctor.entity';
-import { Repository } from 'typeorm';
+import {
+  BadRequestException,
+  Injectable,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/users.service';
 import {
   DoctorTimeSlot,
   TimeSlotStatus,
 } from 'src/doctor-time-slot/entities/doctor-time-slot.entity';
+import { UsersService } from 'src/users/users.service';
+import { Repository } from 'typeorm';
+import { CreateDoctorDto } from './dto/create-doctor.dto';
+import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { Doctor } from './entities/doctor.entity';
 
 @Injectable()
 export class DoctorsService {
   constructor(
     @InjectRepository(Doctor)
     private readonly doctorRepository: Repository<Doctor>,
-
-    @InjectRepository(DoctorTimeSlot)
+    @Inject(forwardRef(() => UsersService))
+    private readonly usersService: UsersService,
     private readonly timeSlotRepository: Repository<DoctorTimeSlot>,
-
-    private readonly userService: UsersService,
   ) {}
   async create(createDoctorDto: CreateDoctorDto) {
-    const user = await this.userService.findOne(createDoctorDto.userId);
+    const user = await this.usersService.findOne(createDoctorDto.userId);
     if (!user) {
       throw new Error('User not found');
     }
@@ -82,6 +85,7 @@ export class DoctorsService {
         const endHour = endMinute === 60 ? hour + 1 : hour;
         const endTime = `${endHour.toString().padStart(2, '0')}:${(endMinute % 60).toString().padStart(2, '0')}`;
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         const timeSlot = this.timeSlotRepository.create({
           date,
           startTime,

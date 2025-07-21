@@ -29,11 +29,16 @@ export class MedicationStockService {
   }
 
   findAll() {
-    return this.medicationStockRepository.find();
+    return this.medicationStockRepository.find({
+      relations: ['medication'],
+    });
   }
 
   findOne(id: number) {
-    return this.medicationStockRepository.findOne({ where: { id } });
+    return this.medicationStockRepository.findOne({
+      where: { id },
+      relations: ['medication'],
+    });
   }
 
   update(id: number, updateMedicationStockDto: UpdateMedicationStockDto) {

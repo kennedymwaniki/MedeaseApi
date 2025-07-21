@@ -13,12 +13,14 @@ export class TasksService {
   //   this.logger.debug('Called every 20 seconds');
   // }
 
-  @Cron('0 8 * * *')
-  async handleCronEveryDayAt8AM() {
-    this.logger.debug('Checking appointments for today at 8 AM');
+  // run every day at 10 : 57 am
+  @Cron('57 10 * * *')
+  async handleCronEveryDayAt1057AM() {
+    this.logger.debug('Checking appointments for today at 10:57 AM');
     try {
       const appointments =
         await this.appointmentsService.getAppointmentsForToday();
+      console.table(appointments);
       this.logger.debug(`Found ${appointments.length} appointments for today`);
     } catch (error) {
       this.logger.error('Error checking appointments for today', error);

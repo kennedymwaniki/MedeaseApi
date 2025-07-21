@@ -22,35 +22,35 @@ export class Doctor {
     example: 'Cardiologist',
   })
   @Column({ nullable: true })
-  specialization: string;
+  specialization?: string;
 
   @ApiProperty({
     description: 'Years of experience of the doctor',
     example: 10,
   })
   @Column({ nullable: true })
-  experience: number;
+  experience?: number;
 
   @ApiProperty({
     description: 'Contact information of the doctor',
     example: '123-456-7890',
   })
   @Column({ nullable: true })
-  contact: string;
+  contact?: string;
 
   @ApiProperty({
     description: 'Availability status of the doctor',
     example: true,
   })
   @Column({ nullable: true })
-  isAvailable: boolean;
+  isAvailable?: boolean;
 
   @ApiProperty({
     description: 'Affiliation of the doctor',
     example: 'Full-time',
   })
   @Column({ nullable: true })
-  affiliation: string; // fulltime  or part time
+  affiliation?: string;
 
   @OneToOne(() => User, (user) => user.doctor)
   @JoinColumn()

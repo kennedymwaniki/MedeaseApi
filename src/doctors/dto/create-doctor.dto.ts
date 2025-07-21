@@ -1,39 +1,55 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
-  IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
 } from 'class-validator';
 
 export class CreateDoctorDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'what field the doctor is specialized in',
+    example: 'Cardiology',
+  })
   @IsString()
-  @IsNotEmpty()
-  specialization: string;
+  @IsOptional()
+  specialization?: string;
 
   @ApiProperty()
   @IsNumber()
   @IsPositive()
-  experience: number;
+  @IsOptional()
+  experience?: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The id or the user to be associated with the doctor',
+  })
   @IsNumber()
   @IsPositive()
   userId: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Phone number of the doctor',
+    example: '123-456-7890',
+  })
   @IsString()
-  @IsNotEmpty()
-  contact: string;
+  @IsOptional()
+  contact?: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Availability status of the doctor',
+    example: true,
+  })
   @IsBoolean()
-  isAvailable: boolean;
+  @IsOptional()
+  isAvailable?: boolean;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Affiliation of the doctor',
+    example: 'Part time or Full time',
+  })
   @IsString()
-  @IsNotEmpty()
-  affiliation: string;
+  @IsOptional()
+  affiliation?: string;
 }

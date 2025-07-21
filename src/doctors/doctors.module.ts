@@ -1,10 +1,10 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { UsersModule } from './../users/users.module';
-import { DoctorsService } from './doctors.service';
-import { DoctorsController } from './doctors.controller';
-import { Doctor } from './entities/doctor.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DoctorTimeSlot } from 'src/doctor-time-slot/entities/doctor-time-slot.entity';
+import { DoctorTimeSlotModule } from 'src/doctor-time-slot/doctor-time-slot.module';
+import { UsersModule } from './../users/users.module';
+import { DoctorsController } from './doctors.controller';
+import { DoctorsService } from './doctors.service';
+import { Doctor } from './entities/doctor.entity';
 
 @Module({
   controllers: [DoctorsController],
@@ -12,7 +12,8 @@ import { DoctorTimeSlot } from 'src/doctor-time-slot/entities/doctor-time-slot.e
   providers: [DoctorsService],
   imports: [
     forwardRef(() => UsersModule),
-    TypeOrmModule.forFeature([Doctor, DoctorTimeSlot]),
+    DoctorTimeSlotModule,
+    TypeOrmModule.forFeature([Doctor]),
   ],
 })
 export class DoctorsModule {}

@@ -23,36 +23,44 @@ export class Patient {
     description: 'Name of the patient',
     example: 'John Doe',
   })
-  @Column()
-  name: string;
+  @Column({
+    nullable: true,
+  })
+  name?: string;
 
   @ApiProperty({
     description: 'Age of the patient',
     example: 30,
   })
   @Column()
-  age: number;
+  age?: number;
 
   @ApiProperty({
     description: 'Gender of the patient',
     example: 'Male',
   })
-  @Column()
-  gender: string;
+  @Column({
+    nullable: true,
+  })
+  gender?: string;
 
   @ApiProperty({
     description: 'Contact information of the patient',
     example: '123-456-7890',
   })
-  @Column()
-  contact: string;
+  @Column({
+    nullable: true,
+  })
+  contact?: string;
 
   @ApiProperty({
     description: 'Address of the patient',
     example: '123 Main St, Anytown, USA',
   })
-  @Column()
-  address: string;
+  @Column({
+    nullable: true,
+  })
+  address?: string;
 
   @OneToOne(() => User, (user) => user.patient)
   @JoinColumn()

@@ -1,15 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  Inject,
+  forwardRef,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
+import { DoctorsService } from 'src/doctors/doctors.service';
+import { MailService } from 'src/mail/mail.service';
+import { PatientsService } from 'src/patients/patients.service';
+import { Repository } from 'typeorm/repository/Repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm/repository/Repository';
-import { InjectRepository } from '@nestjs/typeorm';
-import * as bcrypt from 'bcrypt';
-import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +22,10 @@ export class UsersService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly mailService: MailService,
+    @Inject(forwardRef(() => PatientsService))
+    private readonly patientService: PatientsService,
+    @Inject(forwardRef(() => DoctorsService))
+    private readonly doctorsService: DoctorsService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -41,6 +50,17 @@ export class UsersService {
 
     await this.mailService.sendWelcomeUserEmail(savedUser);
 
+    if (savedUser.role == 'patient') {
+      await this.patientService.create({
+        userId: savedUser.id,
+        name: savedUser.firstname + ' ' + savedUser.lastname,
+      });
+    } else if (savedUser.role == 'doctor') {
+      await this.doctorsService.create({
+        userId: savedUser.id,
+      });
+    }
+    console.log(`User with email ${savedUser.email} created successfully`);
     return savedUser;
   }
 
