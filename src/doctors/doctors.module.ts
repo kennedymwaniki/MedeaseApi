@@ -5,6 +5,7 @@ import { UsersModule } from './../users/users.module';
 import { DoctorsController } from './doctors.controller';
 import { DoctorsService } from './doctors.service';
 import { Doctor } from './entities/doctor.entity';
+import { DoctorTimeSlot } from 'src/doctor-time-slot/entities/doctor-time-slot.entity';
 
 @Module({
   controllers: [DoctorsController],
@@ -13,7 +14,7 @@ import { Doctor } from './entities/doctor.entity';
   imports: [
     forwardRef(() => UsersModule),
     DoctorTimeSlotModule,
-    TypeOrmModule.forFeature([Doctor]),
+    TypeOrmModule.forFeature([Doctor, DoctorTimeSlot]),
   ],
 })
 export class DoctorsModule {}

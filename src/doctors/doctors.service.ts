@@ -22,6 +22,7 @@ export class DoctorsService {
     private readonly doctorRepository: Repository<Doctor>,
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
+    @InjectRepository(DoctorTimeSlot)
     private readonly timeSlotRepository: Repository<DoctorTimeSlot>,
   ) {}
   async create(createDoctorDto: CreateDoctorDto) {
