@@ -15,6 +15,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorators';
 import { UserRole } from 'src/users/enums/roleEnums';
 import { AccessTokenGuard } from 'src/auth/guards/AccessTokenGuard';
+import { MpesaDto } from './dto/mpesaDto';
+import { Public } from 'src/auth/decorators/public.decorators';
 
 @UseGuards(AccessTokenGuard)
 @ApiBearerAuth()
@@ -51,5 +53,12 @@ export class PaymentsController {
   @Roles(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT)
   remove(@Param('id') id: string) {
     return this.paymentsService.remove(+id);
+  }
+
+  @Post('/stk-push')
+  @Public()
+  @Roles(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT)
+  stkPush(@Body() mpesaDto: MpesaDto) {
+    return this.paymentsService.stkPush(mpesaDto);
   }
 }

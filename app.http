@@ -57,8 +57,8 @@ POST http://localhost:8000/auth/login
 Content-Type: application/json
 
 {
-  "email": "patient.doe@medease.com",
-  "password": "patient123456"
+  "email": "kennedymk123@gmail.com",
+  "password": "Timo1234!"
 }
 
 ### 7. Get All Users (to get user IDs for relationships)

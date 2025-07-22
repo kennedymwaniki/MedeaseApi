@@ -57,6 +57,7 @@ export class AuthController {
   }
 
   @Post('password-reset-request')
+  @Public()
   @ApiOperation({ summary: 'Request password reset email with OTP' })
   public async requestEmailReset(@Body() body: PasswordResetRequestDto) {
     console.log('this is the requestEmail ', { body });
@@ -64,6 +65,7 @@ export class AuthController {
   }
 
   @Post('password-reset')
+  @Public()
   @ApiOperation({ summary: 'Reset password using OTP' })
   async resetPassword(@Body() body: ResetPasswordDto) {
     return this.authService.resetPassword(body);

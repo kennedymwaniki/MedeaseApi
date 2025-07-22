@@ -33,7 +33,7 @@ export class UsersService {
       email: createUserDto.email,
     });
     if (existingUser) {
-      throw new NotFoundException(
+      throw new BadRequestException(
         `User with email ${createUserDto.email} already exists`,
       );
     }
@@ -48,20 +48,68 @@ export class UsersService {
     const user = this.userRepository.create(createUserDto);
     const savedUser = await this.userRepository.save(user);
 
-    await this.mailService.sendWelcomeUserEmail(savedUser);
-
-    if (savedUser.role == 'patient') {
-      await this.patientService.create({
-        userId: savedUser.id,
-        name: savedUser.firstname + ' ' + savedUser.lastname,
-      });
-    } else if (savedUser.role == 'doctor') {
-      await this.doctorsService.create({
-        userId: savedUser.id,
-      });
+    if (!savedUser || !savedUser.id) {
+      throw new BadRequestException(
+        'Failed to create user - invalid ID generated',
+      );
     }
+
+    console.log('This is the saved User', savedUser);
+
+    // Send welcome email (but don't let it block user creation if it fails)
+    try {
+      await this.mailService.sendWelcomeUserEmail(savedUser);
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError);
+      // Continue with user creation process
+    }
+
+    // Validate ID is a valid number before creating related records
+    const userId = savedUser.id;
+    if (!userId || isNaN(userId)) {
+      throw new BadRequestException('Invalid user ID generated');
+    }
+
+    if (savedUser.role === 'patient') {
+      console.log('Creating patient record for user:', savedUser);
+      try {
+        const patient = await this.patientService.create({
+          userId: userId,
+          name: `${savedUser.firstname} ${savedUser.lastname}`,
+        });
+        return {
+          user: savedUser,
+          patient: patient,
+        };
+      } catch (error: any) {
+        console.error('Error creating patient:', error);
+        // Optionally delete the user if patient creation fails
+        await this.userRepository.delete(userId);
+        throw new BadRequestException(
+          `Failed to create patient profile: ${error}`,
+        );
+      }
+    } else if (savedUser.role === 'doctor') {
+      try {
+        const doctor = await this.doctorsService.create({
+          userId: userId,
+        });
+        return {
+          user: savedUser,
+          doctor: doctor,
+        };
+      } catch (error) {
+        console.error('Error creating doctor:', error);
+        // Optionally delete the user if doctor creation fails
+        await this.userRepository.delete(userId);
+        throw new BadRequestException(
+          `Failed to create doctor profile: ${error}`,
+        );
+      }
+    }
+
     console.log(`User with email ${savedUser.email} created successfully`);
-    return savedUser;
+    return { user: savedUser };
   }
 
   findAll() {

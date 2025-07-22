@@ -32,7 +32,9 @@ export class Patient {
     description: 'Age of the patient',
     example: 30,
   })
-  @Column()
+  @Column({
+    nullable: true,
+  })
   age?: number;
 
   @ApiProperty({

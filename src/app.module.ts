@@ -56,6 +56,8 @@ import { ChatModule } from './chat/chat.module';
         database: configService.get<string>('DATABASE_NAME'),
         autoLoadEntities: true, // Automatically load entities
         synchronize: true, // Set to false in production
+        ssl: true,
+        PGSSLMODE: 'require',
       }),
     }),
 
