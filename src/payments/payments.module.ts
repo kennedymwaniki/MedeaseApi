@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { PaymentsService } from './payments.service';
-import { PaymentsController } from './payments.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Payment } from './entities/payment.entity';
-import { PrescriptionsModule } from 'src/prescriptions/prescriptions.module';
 import { PatientsModule } from 'src/patients/patients.module';
+import { PrescriptionsModule } from 'src/prescriptions/prescriptions.module';
+import { Payment } from './entities/payment.entity';
+import { PaymentsController } from './payments.controller';
+import { PaymentsService } from './payments.service';
 
 @Module({
   controllers: [PaymentsController],
@@ -13,6 +13,6 @@ import { PatientsModule } from 'src/patients/patients.module';
     PrescriptionsModule,
     PatientsModule,
     TypeOrmModule.forFeature([Payment]),
-  ], // Add Payment entity here when created
+  ],
 })
 export class PaymentsModule {}

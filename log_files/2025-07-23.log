@@ -1,0 +1,12 @@
+2025-07-23T13:53:33.537Z - ::1 - ERROR: {"message":"Cannot GET /.well-known/appspecific/com.chrome.devtools.json","error":"Not Found","statusCode":404} - Path: /.well-known/appspecific/com.chrome.devtools.json
+2025-07-23T13:54:53.646Z - ::1 - ERROR: {"message":"Cannot GET /.well-known/appspecific/com.chrome.devtools.json","error":"Not Found","statusCode":404} - Path: /.well-known/appspecific/com.chrome.devtools.json
+2025-07-23T13:55:01.894Z - ::1 - ERROR: {"message":"Cannot GET /.well-known/appspecific/com.chrome.devtools.json","error":"Not Found","statusCode":404} - Path: /.well-known/appspecific/com.chrome.devtools.json
+2025-07-23T15:56:16.305Z - ::1 - ERROR: {"message":"Unauthorized","statusCode":401} - Path: /auth/refresh?id=11
+2025-07-23T15:56:16.394Z - ::1 - ERROR: {"message":"Unauthorized","statusCode":401} - Path: /prescriptions
+2025-07-23T15:56:17.417Z - ::1 - ERROR: {"message":"Unauthorized","statusCode":401} - Path: /prescriptions
+2025-07-23T17:24:57.424Z - ::1 - ERROR: {"message":"Unauthorized","statusCode":401} - Path: /
+2025-07-23T17:24:57.909Z - ::1 - ERROR: {"message":"Cannot GET /favicon.ico","error":"Not Found","statusCode":404} - Path: /favicon.ico
+2025-07-23T17:30:11.817Z - ::1 - ERROR: {"message":"Unauthorized","statusCode":401} - Path: /
+2025-07-23T17:41:01.001Z - ::1 - ERROR: {"message":["status must be one of the following values: active, inactive, cancelled, completed"],"error":"Bad Request","statusCode":400} - Path: /prescriptions
+2025-07-23T18:04:49.706Z - ::1 - ERROR: {"message":["status must be one of the following values: pending, completed, failed, refunded"],"error":"Bad Request","statusCode":400} - Path: /payments
+2025-07-23T18:05:22.900Z - ::1 - ERROR: {"message":"Patient not found","error":"Bad Request","statusCode":400} - Path: /payments

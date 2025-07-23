@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DoctorsModule } from './doctors/doctors.module';
@@ -21,7 +21,9 @@ import { UploadsModule } from './uploads/uploads.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guards/AccessTokenGuard';
 // import { ChatModule } from './chat/chat.module';
+import { LogsModule } from './logs/logs.module';
 import { DoctorTimeSlotModule } from './doctor-time-slot/doctor-time-slot.module';
+import { LoggerMiddleware } from './logger.middleware';
 // import { ChatModule } from './chat/chat.module';
 
 @Module({
@@ -67,6 +69,8 @@ import { DoctorTimeSlotModule } from './doctor-time-slot/doctor-time-slot.module
 
     DoctorTimeSlotModule,
 
+    LogsModule,
+
     // ChatModule,
   ],
   controllers: [AppController],
@@ -78,4 +82,8 @@ import { DoctorTimeSlotModule } from './doctor-time-slot/doctor-time-slot.module
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

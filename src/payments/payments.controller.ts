@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   Res,
-  // UseGuards,
+  UseGuards,
 } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
@@ -16,13 +16,13 @@ import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorators';
 import { UserRole } from 'src/users/enums/roleEnums';
-// import { AccessTokenGuard } from 'src/auth/guards/AccessTokenGuard';
+import { AccessTokenGuard } from 'src/auth/guards/AccessTokenGuard';
 import { MpesaDto } from './dto/mpesaDto';
 import { Public } from 'src/auth/decorators/public.decorators';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 
-// @UseGuards(AccessTokenGuard)
+@UseGuards(AccessTokenGuard)
 @ApiBearerAuth()
 @ApiTags('payments')
 @Controller('payments')

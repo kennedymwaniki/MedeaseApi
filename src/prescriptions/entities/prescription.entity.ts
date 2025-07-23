@@ -58,6 +58,9 @@ export class Prescription {
   @Column()
   endDate: Date;
 
+  @Column({ type: 'boolean', default: false })
+  isPaid: boolean = false;
+
   @ManyToOne(() => Patient, (patient) => patient.prescriptions)
   patient: Patient;
 

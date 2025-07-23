@@ -13,6 +13,7 @@ import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { REQUEST } from '@nestjs/core';
+import { PrescriptionsService } from 'src/prescriptions/prescriptions.service';
 @Injectable()
 export class PaymentsService {
   url =
@@ -26,23 +27,47 @@ export class PaymentsService {
     private readonly request: Request,
 
     private readonly patientsService: PatientsService,
+    private readonly prescriptionsService: PrescriptionsService,
     private readonly configService: ConfigService,
   ) {}
 
-  create(createPaymentDto: CreatePaymentDto) {
+  async create(createPaymentDto: CreatePaymentDto) {
+    const patient = await this.patientsService.findOne(
+      createPaymentDto.patientId,
+    );
+    if (!patient) {
+      throw new BadRequestException('Patient not found');
+    }
+    const prescription = await this.prescriptionsService.findOne(
+      createPaymentDto.prescriptionId,
+    );
+    if (!prescription) {
+      throw new BadRequestException('Prescription not found');
+    }
+
     const payment = this.paymentsRepository.create(createPaymentDto);
     return this.paymentsRepository.save(payment);
   }
 
   findAll() {
-    return `This action returns all payments`;
+    return this.paymentsRepository.find({
+      relations: ['patient', 'prescription'],
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} payment`;
+    return this.paymentsRepository.findOne({
+      where: { id },
+      relations: ['patient', 'prescription'],
+    });
   }
 
-  update(id: number, updatePaymentDto: UpdatePaymentDto) {
+  async update(id: number, updatePaymentDto: UpdatePaymentDto) {
+    const payment = await this.paymentsRepository.findOne({ where: { id } });
+    if (!payment) {
+      throw new BadRequestException('Payment not found');
+    }
+
     return this.paymentsRepository.update(id, updatePaymentDto);
   }
 
@@ -53,6 +78,7 @@ export class PaymentsService {
     }
     return this.paymentsRepository.find({ where: { patient } });
   }
+
   remove(id: number) {
     return this.paymentsRepository.delete(id);
   }
