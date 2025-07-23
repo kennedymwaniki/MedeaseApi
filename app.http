@@ -27,11 +27,11 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "email": "kennedymwas8@gmail.com",
+  "email": "kennedymwaniki089@gmail.com",
   "password": "patient123456",
   "role": "patient",
-  "firstname": "Patient Jane",
-  "lastname": "Doe"
+  "firstname": "Kennedy",
+  "lastname": "Mwaniki"
 }
 
 ### 4. Login Admin User // Admin
@@ -191,3 +191,23 @@ GET http://localhost:8000/appointments
 
 
 POST http://localhost:8000/doctors
+
+
+
+###
+POST http://localhost:8000/payments/paystack-push
+Content-Type: application/json
+
+{
+  "email": "patient.wilson@medease.com",
+  "amount": 10
+}
+
+
+### 21. Paystack Callback
+GET http://localhost:8000/payments/paystack-callback?trxref=4u0luywiut&reference=4u0luywiut
+
+
+
+### 22. Paystack Callback
+GET http://localhost:8000/payments/paystack-callback?trxref=4u0luywiut&reference=4u0luywiut

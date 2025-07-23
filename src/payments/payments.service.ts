@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { MpesaDto } from './dto/mpesaDto';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +11,8 @@ import { PatientsService } from 'src/patients/patients.service';
 import { Repository } from 'typeorm';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
+import { Request } from 'express';
+import { REQUEST } from '@nestjs/core';
 @Injectable()
 export class PaymentsService {
   url =
@@ -19,6 +21,9 @@ export class PaymentsService {
   constructor(
     @InjectRepository(Payment)
     private paymentsRepository: Repository<Payment>,
+
+    @Inject(REQUEST)
+    private readonly request: Request,
 
     private readonly patientsService: PatientsService,
     private readonly configService: ConfigService,
@@ -44,7 +49,7 @@ export class PaymentsService {
   async findByPatientId(patientId: number) {
     const patient = await this.patientsService.findOne(patientId);
     if (!patient) {
-      throw new Error('Patient not found');
+      throw new BadRequestException('Patient not found');
     }
     return this.paymentsRepository.find({ where: { patient } });
   }
@@ -103,7 +108,7 @@ export class PaymentsService {
       };
     } catch (error) {
       console.log(error);
-      return { message: 'Error processing request' };
+      return { message: 'BadRequestException processing request' };
     }
   }
 
@@ -129,7 +134,79 @@ export class PaymentsService {
       return response.data.access_token;
     } catch (error) {
       console.log(error);
-      throw new Error('Failed to get access token.');
+      throw new BadRequestException('Failed to get access token.');
+    }
+  }
+
+  async paystackPush(email: string, amount: number) {
+    const PAYSTACKURL = 'https://api.paystack.co/transaction/initialize';
+    const headers = {
+      Authorization: `Bearer ${this.configService.get('PAYSTACK_SECRET_KEY')}`,
+      'Content-Type': 'application/json',
+    };
+
+    const baseUrl =
+      this.request.protocol + '://' + this.request.headers.host + '/';
+
+    const newUrl = new URL(this.request.url, baseUrl);
+    const data = {
+      email: email,
+      amount: amount * 100,
+      currency: 'KES',
+      callback_url: `${newUrl.origin}/payments/paystack-callback`,
+      metadata: {},
+    };
+    try {
+      const response = await axios.post(PAYSTACKURL, data, { headers });
+      console.log('Paystack response:', response.data);
+      return {
+        message: 'Payment initialized successfully',
+        data: response.data,
+      };
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException('Failed to initialize payment');
+    }
+  }
+
+  async verifyPaystackTransaction(transactionId: string) {
+    const PAYSTACKURL = `https://api.paystack.co/transaction/verify/${transactionId}`;
+    const headers = {
+      Authorization: `Bearer ${this.configService.get('PAYSTACK_SECRET_KEY')}`,
+      'Content-Type': 'application/json',
+    };
+    try {
+      const response = await axios.get(PAYSTACKURL, { headers });
+      console.log('Paystack verification response:', response.data);
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException('Failed to verify Paystack transaction');
+    }
+  }
+
+  async paystackCallback(body: { trxref: string; reference: string }) {
+    console.log('Received callback body:', body);
+    const trxref = body.trxref;
+    console.log('Received trxref:', trxref);
+    try {
+      const verificationResponse = await this.verifyPaystackTransaction(trxref);
+      if (verificationResponse.status) {
+        console.log('Payment verification successful:', verificationResponse);
+        return {
+          message: 'Payment successful',
+          data: verificationResponse.data,
+        };
+      } else {
+        return { message: 'Payment failed', data: verificationResponse };
+      }
+    } catch (error) {
+      console.log(error);
+      return {
+        message: 'BadRequestException processing payment',
+        error: error.message,
+      };
     }
   }
 }
