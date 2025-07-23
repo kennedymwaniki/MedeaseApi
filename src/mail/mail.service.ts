@@ -36,7 +36,7 @@ export class MailService {
         email: user.email,
         otp,
         secret,
-        resetUrl: 'https://eventoasisapi.onrender.com/auth/reset-password',
+        resetUrl: 'https://medeaseapi.onrender.com/auth/reset-password',
       },
     });
     console.log(`Password reset email sent to ${user.email}`);
