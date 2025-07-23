@@ -18,6 +18,7 @@ async function bootstrap() {
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('ejs');
 
   app.enableCors({
     origin: '*', // Adjust this to your needs
@@ -49,7 +50,7 @@ async function bootstrap() {
     .addBearerAuth()
     .addTag('medical-history')
     .addServer('http://localhost:8000', 'Local Development Server') // Add server URL
-    .addServer('https://api.example.com', 'Production Server') // Add production server URL
+    .addServer('https://medeaseapi.onrender.com', 'Production Server') // Add production server URL
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory, {
