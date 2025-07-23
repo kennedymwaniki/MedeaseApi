@@ -9,13 +9,13 @@ export class MailService {
   async sendWelcomeUserEmail(user: User): Promise<void> {
     await this.mailerService.sendMail({
       to: user.email,
-      subject: 'Welcome to EventOasis',
-      from: 'EventOasis Dev Team',
+      subject: 'Welcome to MedEase - Your Healthcare Management Platform',
+      from: 'MedEase Healthcare Team',
       template: './welcome',
       context: {
         name: user.firstname,
         email: user.email,
-        loginUrl: 'https://eventoasisapi.onrender.com/auth/login',
+        loginUrl: 'http://localhost:8000/auth/login', // Update this to your actual login URL
       },
     });
     console.log(`Welcome email sent to ${user.email}`);

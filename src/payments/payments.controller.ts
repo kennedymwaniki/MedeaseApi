@@ -61,4 +61,6 @@ export class PaymentsController {
   stkPush(@Body() mpesaDto: MpesaDto) {
     return this.paymentsService.stkPush(mpesaDto);
   }
+
+  // callback-url-path",
 }

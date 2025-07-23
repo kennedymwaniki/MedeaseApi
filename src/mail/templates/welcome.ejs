@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to EventOasis</title>
+  <title>Welcome to MedEase</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     body {
-      background-color: #fffbeb; /* amber-50 */
+      background-color: #f0f9ff; /* sky-50 */
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* font-sans */
       margin: 0;
       padding: 0;
@@ -25,7 +25,7 @@
       overflow: hidden; /* overflow-hidden */
     }
     .header-gradient {
-      background-image: linear-gradient(to right, #4f46e5, #f59e0b); /* bg-gradient-to-r from-indigo-600 to-amber-500 */
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4, #10b981); /* Medical blue-teal-green gradient */
       padding: 1.5rem; /* p-6 */
     }
     .flex-center {
@@ -74,18 +74,18 @@
     .text-gray-800 { color: #1f2937; }
     .text-gray-400 { color: #9ca3af; }
 
-    .text-indigo-700 { color: #4338ca; }
-    .text-indigo-600 { color: #4f46e5; }
-    .text-indigo-800 { color: #3730a3; }
+    .text-sky-700 { color: #0369a1; }
+    .text-sky-600 { color: #0284c7; }
+    .text-sky-800 { color: #075985; }
     
-    .text-amber-700 { color: #b45309; }
-    .text-amber-800 { color: #92400e; }
-    .text-amber-600 { color: #d97706; }
+    .text-teal-700 { color: #0f766e; }
+    .text-teal-800 { color: #115e59; }
+    .text-teal-600 { color: #0d9488; }
 
     .info-box {
-      background-color: #fffbeb; /* bg-amber-50 */
+      background-color: #f0f9ff; /* bg-sky-50 */
       border-left-width: 4px; /* border-l-4 */
-      border-color: #f59e0b; /* border-amber-500 */
+      border-color: #0ea5e9; /* border-sky-500 */
       padding: 1rem; /* p-4 */
       margin-bottom: 1.5rem; /* mb-6 */
     }
@@ -95,18 +95,18 @@
       padding-right: 2rem; /* px-8 */
       padding-top: 1rem; /* py-4 */
       padding-bottom: 1rem; /* py-4 */
-      background-color: #4f46e5; /* bg-indigo-600 */
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4); /* Medical gradient */
       color: #ffffff; /* text-white */
       font-weight: 500; /* font-medium */
       border-radius: 0.5rem; /* rounded-lg */
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
-      transition-property: background-color, transform;
+      transition-property: background, transform;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-duration: 300ms;
       text-decoration: none;
     }
     .cta-button:hover {
-      background-color: #4338ca; /* hover:bg-indigo-700 */
+      background: linear-gradient(135deg, #0284c7, #0891b2); /* hover gradient */
       transform: translateY(-0.25rem); /* hover:-translate-y-1 */
     }
     .text-sm {
@@ -125,7 +125,7 @@
       margin-bottom: 1.5rem; /* mb-6 */
     }
     .url-box code {
-      color: #4f46e5; /* text-indigo-600 */
+      color: #0ea5e9; /* text-sky-500 */
       font-size: 0.875rem; /* text-sm */
     }
     .text-lg {
@@ -151,18 +151,18 @@
       padding: 0.5rem; /* p-2 */
       margin-right: 0.75rem; /* mr-3 */
     }
-    .icon-wrapper-amber {
-      background-color: #fef3c7; /* bg-amber-100 */
+    .icon-wrapper-sky {
+      background-color: #e0f2fe; /* bg-sky-100 */
     }
-    .icon-wrapper-indigo {
-      background-color: #e0e7ff; /* bg-indigo-100 */
+    .icon-wrapper-teal {
+      background-color: #ccfbf1; /* bg-teal-100 */
     }
     .icon-svg {
       height: 1.25rem; /* h-5 */
       width: 1.25rem; /* w-5 */
     }
-    .svg-amber { color: #d97706; /* text-amber-600 */ }
-    .svg-indigo { color: #4f46e5; /* text-indigo-600 */ }
+    .svg-sky { color: #0ea5e9; /* text-sky-500 */ }
+    .svg-teal { color: #14b8a6; /* text-teal-500 */ }
 
     .footer-section {
       background-color: #f9fafb; /* bg-gray-50 */
@@ -173,10 +173,10 @@
     .footer-link {
       text-decoration: none;
     }
-    .footer-link-indigo { color: #4f46e5; }
-    .footer-link-indigo:hover { color: #3730a3; }
-    .footer-link-amber { color: #d97706; }
-    .footer-link-amber:hover { color: #92400e; }
+    .footer-link-sky { color: #0ea5e9; }
+    .footer-link-sky:hover { color: #0284c7; }
+    .footer-link-teal { color: #14b8a6; }
+    .footer-link-teal:hover { color: #0d9488; }
     
     .social-icons-container {
       margin-top: 1rem; /* mt-4 */
@@ -190,43 +190,43 @@
     }
   </style>
 </head>
-<body style="background-color: #fffbeb; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; margin: 0; padding: 0;">
+<body style="background-color: #f0f9ff; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; margin: 0; padding: 0;">
   <div class="container" style="max-width: 42rem; margin-left: auto; margin-right: auto; padding: 2rem;">
     <div class="card" style="background-color: #ffffff; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); overflow: hidden;">
       <!-- Header with gradient -->
-      <div class="header-gradient" style="background-image: linear-gradient(to right, #4f46e5, #f59e0b); padding: 1.5rem;">
+      <div class="header-gradient" style="background: linear-gradient(135deg, #0ea5e9, #06b6d4, #10b981); padding: 1.5rem;">
         <div class="flex-center mb-4" style="display: flex; justify-content: center; margin-bottom: 1rem;">
-          <img src="https://eventoasisapi.onrender.com/images/logo.png" alt="EventOasis Logo" class="logo" style="height: 4rem;"
-               onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/6366f1/ffffff?text=EventOasis';">
+          <img src="http://localhost:8000/logo.png" alt="MedEase Logo" class="logo" style="height: 4rem;"
+               onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/0ea5e9/ffffff?text=MedEase';">
         </div>
-        <h1 class="text-white text-center text-3xl font-bold" style="color: #ffffff; text-align: center; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;">Welcome to EventOasis!</h1>
+        <h1 class="text-white text-center text-3xl font-bold" style="color: #ffffff; text-align: center; font-size: 1.875rem; line-height: 2.25rem; font-weight: 700;">Welcome to MedEase!</h1>
       </div>
       
       <!-- Content -->
       <div class="content-padding" style="padding: 2rem;">
-        <p class="text-gray-700 mb-6" style="color: #374151; margin-bottom: 1.5rem;">Dear <span class="font-semibold text-indigo-700" style="font-weight: 600; color: #4338ca;"><%= name %></span>,</p>
+        <p class="text-gray-700 mb-6" style="color: #374151; margin-bottom: 1.5rem;">Dear <span class="font-semibold text-sky-700" style="font-weight: 600; color: #0369a1;"><%= name %></span>,</p>
         
         <p class="text-gray-700 mb-4" style="color: #374151; margin-bottom: 1rem;">
-          Thank you for joining EventOasis! We're thrilled to have you as part of our community.
+          Welcome to MedEase! We're delighted to have you join our comprehensive healthcare management platform.
         </p>
         
         <p class="text-gray-700 mb-4" style="color: #374151; margin-bottom: 1rem;">
-          Your account has been successfully created with the email address: <span class="text-amber-700 font-medium" style="color: #b45309; font-weight: 500;"><%= email %></span>
+          Your healthcare account has been successfully created with the email address: <span class="text-teal-700 font-medium" style="color: #0f766e; font-weight: 500;"><%= email %></span>
         </p>
         
         <p class="text-gray-700 mb-6" style="color: #374151; margin-bottom: 1.5rem;">
-          With EventOasis, you can discover exciting events, purchase tickets securely, and manage your event experiences all in one place.
+          MedEase is designed to streamline your healthcare experience by providing easy access to medical records, appointment scheduling, prescription management, and much more - all in one secure platform.
         </p>
         
-        <div class="info-box" style="background-color: #fffbeb; border-left-width: 4px; border-color: #f59e0b; padding: 1rem; margin-bottom: 1.5rem;">
-          <p class="text-amber-800 font-medium" style="color: #92400e; font-weight: 500;">Ready to explore?</p>
-          <p class="text-amber-700" style="color: #b45309;">Click the button below to log in and start your journey!</p>
+        <div class="info-box" style="background-color: #f0f9ff; border-left-width: 4px; border-color: #0ea5e9; padding: 1rem; margin-bottom: 1.5rem;">
+          <p class="text-sky-800 font-medium" style="color: #075985; font-weight: 500;">Ready to manage your health?</p>
+          <p class="text-sky-700" style="color: #0369a1;">Click the button below to log in and start your healthcare journey!</p>
         </div>
         
         <!-- CTA Button -->
         <div class="text-center mb-6" style="text-align: center; margin-bottom: 1.5rem;">
-          <a href="<%= loginUrl %>" class="cta-button" style="display: inline-block; padding-left: 2rem; padding-right: 2rem; padding-top: 1rem; padding-bottom: 1rem; background-color: #4f46e5; color: #ffffff; font-weight: 500; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); transition-property: background-color, transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; text-decoration: none;">
-            Log In to Your Account
+          <a href="<%= loginUrl %>" class="cta-button" style="display: inline-block; padding-left: 2rem; padding-right: 2rem; padding-top: 1rem; padding-bottom: 1rem; background: linear-gradient(135deg, #0ea5e9, #06b6d4); color: #ffffff; font-weight: 500; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); transition-property: background, transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; text-decoration: none;">
+            Access Your Health Dashboard
           </a>
         </div>
         
@@ -235,61 +235,86 @@
         </p>
         
         <div class="url-box" style="background-color: #f9fafb; padding: 0.75rem; border-radius: 0.375rem; word-break: break-all; margin-bottom: 1.5rem;">
-          <code style="color: #4f46e5; font-size: 0.875rem;"><%= loginUrl %></code>
+          <code style="color: #0ea5e9; font-size: 0.875rem;"><%= loginUrl %></code>
         </div>
       </div>
       
       <!-- Features Section -->
       <div class="features-padding" style="padding-left: 2rem; padding-right: 2rem; padding-bottom: 2rem;">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4" style="font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">What you can do with EventOasis:</h3>
+        <h3 class="text-lg font-semibold text-gray-800 mb-4" style="font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">What you can do with MedEase:</h3>
         
         <div class="grid-container" style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1rem;">
           <div class="feature-item" style="display: flex; align-items: flex-start;">
-            <div class="icon-wrapper icon-wrapper-amber" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #fef3c7;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-amber" style="height: 1.25rem; width: 1.25rem; color: #d97706;" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+            <div class="icon-wrapper icon-wrapper-sky" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #e0f2fe;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-sky" style="height: 1.25rem; width: 1.25rem; color: #0ea5e9;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.091-.357 61.456 61.456 0 019.908-8.59zM9 6.75V15a2.25 2.25 0 002.25 2.25h5.379a2.25 2.25 0 002.25-2.25V6.75a.75.75 0 01.75-.75H21a.75.75 0 010 1.5h-1.379A3.75 3.75 0 0116.25 11v4a3.75 3.75 0 01-3.75 3.75H11.25A3.75 3.75 0 017.5 15v-4a3.75 3.75 0 01-3.371-3.25H3a.75.75 0 010-1.5h1.379a.75.75 0 01.75.75z"/>
               </svg>
             </div>
             <div>
-              <h4 class="text-indigo-800 font-medium" style="color: #3730a3; font-weight: 500;">Discover Events</h4>
-              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Find exciting events happening near you</p>
+              <h4 class="text-sky-800 font-medium" style="color: #075985; font-weight: 500;">Medical Records</h4>
+              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Access and manage your complete medical history securely</p>
             </div>
           </div>
           
           <div class="feature-item" style="display: flex; align-items: flex-start;">
-            <div class="icon-wrapper icon-wrapper-indigo" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #e0e7ff;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-indigo" style="height: 1.25rem; width: 1.25rem; color: #4f46e5;" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
-                <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" />
+            <div class="icon-wrapper icon-wrapper-teal" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #ccfbf1;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-teal" style="height: 1.25rem; width: 1.25rem; color: #14b8a6;" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
               </svg>
             </div>
             <div>
-              <h4 class="text-indigo-800 font-medium" style="color: #3730a3; font-weight: 500;">Secure Tickets</h4>
-              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Purchase and store tickets digitally</p>
+              <h4 class="text-sky-800 font-medium" style="color: #075985; font-weight: 500;">Appointments</h4>
+              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Schedule and manage appointments with healthcare providers</p>
             </div>
           </div>
           
           <div class="feature-item" style="display: flex; align-items: flex-start;">
-            <div class="icon-wrapper icon-wrapper-amber" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #fef3c7;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-amber" style="height: 1.25rem; width: 1.25rem; color: #d97706;" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+            <div class="icon-wrapper icon-wrapper-sky" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #e0f2fe;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-sky" style="height: 1.25rem; width: 1.25rem; color: #0ea5e9;" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.5 3.798v5.02a3 3 0 01-.879 2.121l-2.377 2.377a9.845 9.845 0 015.091 1.013 8.315 8.315 0 005.713.636l.285-.071A7.73 7.73 0 0018 15.75c0-2.089-.653-4.028-1.789-5.621L15.334 8.29a3 3 0 01-.879-2.121v-5.02A23.614 23.614 0 0010.5 3.798zM9 18.75l-2.7-2.7c-.495-.495-.74-1.142-.74-1.8s.245-1.305.74-1.8L9 9.75h6l2.7 2.7c.495.495.74 1.142.74 1.8s-.245 1.305-.74 1.8L15 18.75H9z" clip-rule="evenodd" />
               </svg>
             </div>
             <div>
-              <h4 class="text-indigo-800 font-medium" style="color: #3730a3; font-weight: 500;">Event Details</h4>
-              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Access all information about your events</p>
+              <h4 class="text-sky-800 font-medium" style="color: #075985; font-weight: 500;">Prescriptions</h4>
+              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Track medications and prescription refills easily</p>
             </div>
           </div>
           
           <div class="feature-item" style="display: flex; align-items: flex-start;">
-            <div class="icon-wrapper icon-wrapper-indigo" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #e0e7ff;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-indigo" style="height: 1.25rem; width: 1.25rem; color: #4f46e5;" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clip-rule="evenodd" />
+            <div class="icon-wrapper icon-wrapper-teal" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #ccfbf1;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-teal" style="height: 1.25rem; width: 1.25rem; color: #14b8a6;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"/>
               </svg>
             </div>
             <div>
-              <h4 class="text-indigo-800 font-medium" style="color: #3730a3; font-weight: 500;">Share Experiences</h4>
-              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Rate events and share feedback</p>
+              <h4 class="text-sky-800 font-medium" style="color: #075985; font-weight: 500;">Healthcare Team</h4>
+              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Connect with doctors and healthcare professionals</p>
+            </div>
+          </div>
+
+          <div class="feature-item" style="display: flex; align-items: flex-start;">
+            <div class="icon-wrapper icon-wrapper-sky" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #e0f2fe;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-sky" style="height: 1.25rem; width: 1.25rem; color: #0ea5e9;" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5V3z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-sky-800 font-medium" style="color: #075985; font-weight: 500;">Health Analytics</h4>
+              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">View insights and track your health progress over time</p>
+            </div>
+          </div>
+
+          <div class="feature-item" style="display: flex; align-items: flex-start;">
+            <div class="icon-wrapper icon-wrapper-teal" style="border-radius: 9999px; padding: 0.5rem; margin-right: 0.75rem; background-color: #ccfbf1;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg svg-teal" style="height: 1.25rem; width: 1.25rem; color: #14b8a6;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z"/>
+                <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-sky-800 font-medium" style="color: #075985; font-weight: 500;">Secure Payments</h4>
+              <p class="text-gray-600 text-sm" style="color: #4b5563; font-size: 0.875rem; line-height: 1.25rem;">Handle medical bills and payments seamlessly</p>
             </div>
           </div>
         </div>
@@ -298,27 +323,27 @@
       <!-- Footer -->
       <div class="footer-section" style="background-color: #f9fafb; padding: 1.5rem; border-top-width: 1px; border-color: #f3f4f6;">
         <p class="text-gray-500 text-sm text-center" style="color: #6b7280; font-size: 0.875rem; line-height: 1.25rem; text-align: center;">
-          If you have any questions, please contact our support team at <a href="mailto:support@eventoasis.com" class="footer-link footer-link-indigo" style="text-decoration: none; color: #4f46e5;">support@eventoasis.com</a>
+          If you have any questions, please contact our support team at <a href="mailto:support@medease.com" class="footer-link footer-link-sky" style="text-decoration: none; color: #0ea5e9;">support@medease.com</a>
         </p>
         <div class="social-icons-container" style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
-          <a href="#" class="social-icon footer-link footer-link-amber" style="text-decoration: none; color: #d97706;">
+          <a href="#" class="social-icon footer-link footer-link-sky" style="text-decoration: none; color: #0ea5e9;">
             <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="height: 1.5rem; width: 1.5rem;">
               <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path>
             </svg>
           </a>
-          <a href="#" class="social-icon footer-link footer-link-indigo" style="text-decoration: none; color: #4f46e5;">
+          <a href="#" class="social-icon footer-link footer-link-teal" style="text-decoration: none; color: #14b8a6;">
             <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="height: 1.5rem; width: 1.5rem;">
               <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
             </svg>
           </a>
-          <a href="#" class="social-icon footer-link footer-link-amber" style="text-decoration: none; color: #d97706;">
+          <a href="#" class="social-icon footer-link footer-link-sky" style="text-decoration: none; color: #0ea5e9;">
             <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="height: 1.5rem; width: 1.5rem;">
               <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353-.3-.882-.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
             </svg>
           </a>
         </div>
         <p class="text-gray-400 text-xs text-center" style="color: #9ca3af; font-size: 0.75rem; line-height: 1rem; text-align: center; margin-top: 1rem;">
-          &copy; <%= new Date().getFullYear() %> EventOasis. All rights reserved.
+          &copy; <%= new Date().getFullYear() %> MedEase. All rights reserved. | HIPAA Compliant Healthcare Management
         </p>
       </div>
     </div>
