@@ -15,7 +15,7 @@ export class MailService {
       context: {
         name: user.firstname,
         email: user.email,
-        loginUrl: 'http://localhost:8000/auth/login', // Update this to your actual login URL
+        loginUrl: 'https://medeaseapi.onrender.com/auth/login', // Update this to your actual login URL
       },
     });
     console.log(`Welcome email sent to ${user.email}`);
