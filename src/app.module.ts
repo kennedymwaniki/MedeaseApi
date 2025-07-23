@@ -22,7 +22,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guards/AccessTokenGuard';
 // import { ChatModule } from './chat/chat.module';
 import { DoctorTimeSlotModule } from './doctor-time-slot/doctor-time-slot.module';
-import { ChatModule } from './chat/chat.module';
+// import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -67,7 +67,7 @@ import { ChatModule } from './chat/chat.module';
 
     DoctorTimeSlotModule,
 
-    ChatModule,
+    // ChatModule,
   ],
   controllers: [AppController],
   providers: [
