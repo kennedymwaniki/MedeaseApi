@@ -13,10 +13,10 @@ export class TasksService {
   //   this.logger.debug('Called every 20 seconds');
   // }
 
-  // run every day at 10 : 57 am
-  @Cron('57 10 * * *')
-  async handleCronEveryDayAt1057AM() {
-    this.logger.debug('Checking appointments for today at 10:57 AM');
+  // run every day at 9 am
+  @Cron('0 9 * * *')
+  async handleCronEveryDayAt9AM() {
+    this.logger.debug('Checking appointments for today at 9:00 AM');
     try {
       const appointments =
         await this.appointmentsService.getAppointmentsForToday();

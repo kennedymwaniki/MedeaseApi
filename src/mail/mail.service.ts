@@ -1,6 +1,35 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+
 import { User } from 'src/users/entities/user.entity';
+
+interface appointmentData {
+  doctor: {
+    user: {
+      email: string;
+      firstname: string;
+      lastname: string;
+    };
+    specialization: string;
+    experience: string;
+  };
+  date: string;
+  time: string;
+  duration: string;
+  title: string;
+  status: string;
+  admin_url: string;
+  user_url: string;
+  patient: {
+    name: string;
+    age: string;
+    gender: string;
+    contact: string;
+    user: {
+      email: string;
+    };
+  };
+}
 
 @Injectable()
 export class MailService {
@@ -15,7 +44,7 @@ export class MailService {
       context: {
         name: user.firstname,
         email: user.email,
-        loginUrl: 'https://medeaseapi.onrender.com/auth/login', // Update this to your actual login URL
+        loginUrl: 'https://medeaseapi.onrender.com/auth/login',
       },
     });
     console.log(`Welcome email sent to ${user.email}`);
@@ -40,5 +69,58 @@ export class MailService {
       },
     });
     console.log(`Password reset email sent to ${user.email}`);
+  }
+
+  async sendAppointmentReminderToDoctor(
+    appointmentData: appointmentData,
+  ): Promise<void> {
+    await this.mailerService.sendMail({
+      to: appointmentData.doctor.user.email,
+      subject: "Appointment Reminder - Today's Schedule",
+      from: 'MedEase Healthcare Team',
+      template: './appointment-reminder-doctor',
+      context: {
+        doctorName: `${appointmentData.doctor.user.firstname} ${appointmentData.doctor.user.lastname}`,
+        appointmentDate: appointmentData.date,
+        appointmentTime: appointmentData.time,
+        duration: appointmentData.duration,
+        appointmentTitle: appointmentData.title,
+        status: appointmentData.status,
+        patientName: appointmentData.patient.name,
+        patientAge: appointmentData.patient.age,
+        patientGender: appointmentData.patient.gender,
+        patientContact: appointmentData.patient.contact,
+        adminUrl: appointmentData.admin_url,
+      },
+    });
+    console.log(
+      `Appointment reminder sent to doctor: ${appointmentData.doctor.user.email}`,
+    );
+  }
+
+  async sendAppointmentReminderToPatient(
+    appointmentData: appointmentData,
+  ): Promise<void> {
+    await this.mailerService.sendMail({
+      to: appointmentData.patient.user.email,
+      subject: 'Appointment Reminder - Your Healthcare Appointment Today',
+      from: 'MedEase Healthcare Team',
+      template: './appointment-reminder-patient',
+      context: {
+        patientName: appointmentData.patient.name,
+        appointmentDate: appointmentData.date,
+        appointmentTime: appointmentData.time,
+        duration: appointmentData.duration,
+        appointmentTitle: appointmentData.title,
+        status: appointmentData.status,
+        doctorName: `${appointmentData.doctor.user.firstname} ${appointmentData.doctor.user.lastname}`,
+        doctorSpecialization: appointmentData.doctor.specialization,
+        doctorExperience: appointmentData.doctor.experience,
+        userUrl: appointmentData.user_url,
+      },
+    });
+    console.log(
+      `Appointment reminder sent to patient: ${appointmentData.patient.user.email}`,
+    );
   }
 }

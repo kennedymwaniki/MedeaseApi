@@ -10,3 +10,12 @@
 2025-07-23T17:41:01.001Z - ::1 - ERROR: {"message":["status must be one of the following values: active, inactive, cancelled, completed"],"error":"Bad Request","statusCode":400} - Path: /prescriptions
 2025-07-23T18:04:49.706Z - ::1 - ERROR: {"message":["status must be one of the following values: pending, completed, failed, refunded"],"error":"Bad Request","statusCode":400} - Path: /payments
 2025-07-23T18:05:22.900Z - ::1 - ERROR: {"message":"Patient not found","error":"Bad Request","statusCode":400} - Path: /payments
+2025-07-23T20:19:03.275Z - ::1 - ERROR: {"message":"Unauthorized","statusCode":401} - Path: /patients/1
+2025-07-23T20:40:19.766Z - ::1 - ERROR: {"message":"Invalid password","error":"Bad Request","statusCode":400} - Path: /auth/login
+2025-07-23T20:41:56.403Z - ::1 - ERROR: {"message":"Invalid password","error":"Bad Request","statusCode":400} - Path: /auth/login
+2025-07-23T20:41:57.444Z - ::1 - ERROR: {"message":"Invalid password","error":"Bad Request","statusCode":400} - Path: /auth/login
+2025-07-23T20:42:07.784Z - ::1 - ERROR: {"message":"Invalid password","error":"Bad Request","statusCode":400} - Path: /auth/login
+2025-07-23T20:42:25.414Z - ::1 - ERROR: {"message":"Invalid password","error":"Bad Request","statusCode":400} - Path: /auth/login
+2025-07-23T21:26:46.867Z - ::1 - ERROR: {"message":"Cannot POST /paystack/charge","error":"Not Found","statusCode":404} - Path: /paystack/charge
+2025-07-23T21:27:36.621Z - ::1 - ERROR: {"message":"Failed to get access token.","error":"Bad Request","statusCode":400} - Path: /payments/stk-push
+2025-07-23T21:27:48.620Z - ::1 - ERROR: Cannot read properties of undefined (reading 'email') - Path: /payments/paystack-push

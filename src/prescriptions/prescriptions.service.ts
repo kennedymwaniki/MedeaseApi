@@ -55,12 +55,33 @@ export class PrescriptionsService {
 
   findAll() {
     return this.prescriptionRepository.find({
-      relations: ['patient', 'medication', 'payment', 'doctor'],
+      relations: {
+        patient: {
+          user: true, // Only load user info
+        },
+        doctor: {
+          user: true, // Only load user info
+        },
+        medication: true,
+        payment: true,
+      },
     });
   }
 
   findOne(id: number) {
-    return this.prescriptionRepository.findOne({ where: { id } });
+    return this.prescriptionRepository.findOne({
+      where: { id },
+      relations: {
+        patient: {
+          user: true,
+        },
+        doctor: {
+          user: true,
+        },
+        medication: true,
+        payment: true,
+      },
+    });
   }
 
   update(id: number, updatePrescriptionDto: UpdatePrescriptionDto) {

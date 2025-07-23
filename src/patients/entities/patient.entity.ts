@@ -69,17 +69,17 @@ export class Patient {
   user: User;
 
   @OneToMany(() => Appointment, (appointment) => appointment.patient, {
-    eager: true,
+    cascade: true,
   })
   appointments: Appointment[];
 
   @OneToMany(() => Prescription, (prescription) => prescription.patient, {
-    eager: true,
+    cascade: true,
   })
   prescriptions: Prescription[];
 
   @OneToMany(() => MedicalHistory, (medicalHistory) => medicalHistory.patient, {
-    eager: true,
+    cascade: true,
   })
   medicalHistories: MedicalHistory[];
 

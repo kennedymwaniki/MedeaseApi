@@ -60,7 +60,7 @@ export class Doctor {
   name?: string;
 
   @OneToMany(() => Appointment, (appointment) => appointment.doctor, {
-    eager: true,
+    cascade: true,
   })
   appointments: Appointment[];
 
@@ -68,7 +68,7 @@ export class Doctor {
   timeSlots: DoctorTimeSlot[];
 
   @OneToMany(() => Prescription, (prescription) => prescription.doctor, {
-    eager: true,
+    cascade: true,
   })
   prescriptions: Prescription[];
 }

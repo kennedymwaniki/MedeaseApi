@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Reminder - MedEase</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      background-color: #f0f9ff; /* sky-50 */
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 42rem; /* max-w-2xl */
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2rem; /* p-8 */
+    }
+    .card {
+      background-color: #ffffff; /* bg-white */
+      border-radius: 0.75rem; /* rounded-xl */
+      box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+      overflow: hidden; /* overflow-hidden */
+    }
+    .header-gradient {
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4, #10b981); /* Medical blue-teal-green gradient */
+      padding: 2rem; /* p-8 */
+      text-align: center;
+    }
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mt-6 { margin-top: 1.5rem; }
+    .logo {
+      height: 4rem; /* h-16 */
+      filter: brightness(0) invert(1); /* Make logo white */
+    }
+    .text-white { color: #ffffff; }
+    .text-center { text-align: center; }
+    .text-3xl {
+      font-size: 1.875rem; /* 30px */
+      line-height: 2.25rem; /* 36px */
+    }
+    .text-2xl {
+      font-size: 1.5rem; /* 24px */
+      line-height: 2rem; /* 32px */
+    }
+    .text-xl {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+    }
+    .text-lg {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.75rem; /* 28px */
+    }
+    .text-base {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+    }
+    .text-sm {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
+    }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .font-medium { font-weight: 500; }
+    .content-padding { padding: 2.5rem; /* p-10 */ }
+    
+    .text-gray-700 { color: #374151; }
+    .text-gray-600 { color: #4b5563; }
+    .text-gray-500 { color: #6b7280; }
+    .text-gray-800 { color: #1f2937; }
+    .text-gray-400 { color: #9ca3af; }
+    .text-sky-700 { color: #0369a1; }
+    .text-sky-600 { color: #0284c7; }
+    .text-sky-800 { color: #075985; }
+    .text-teal-700 { color: #0f766e; }
+    .text-emerald-700 { color: #047857; }
+    .text-emerald-800 { color: #065f46; }
+    .text-amber-800 { color: #92400e; }
+    .text-red-700 { color: #b91c1c; }
+    .text-purple-800 { color: #6b21a8; }
+
+    .appointment-card {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe); /* sky gradient */
+      border-left: 6px solid #0ea5e9; /* border-l-6 border-sky-500 */
+      padding: 2rem; /* p-8 */
+      margin: 2rem 0; /* my-8 */
+      border-radius: 0.75rem; /* rounded-xl */
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr)); /* grid-cols-1 */
+      gap: 1rem; /* gap-4 */
+    }
+    @media (min-width: 768px) { /* md: */
+      .detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* md:grid-cols-2 */
+      }
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem; /* p-3 */
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 0.5rem; /* rounded-lg */
+      border: 1px solid rgba(14, 165, 233, 0.2);
+    }
+
+    .detail-icon {
+      margin-right: 0.75rem; /* mr-3 */
+      font-size: 1.25rem; /* text-xl */
+      color: #0ea5e9; /* text-sky-500 */
+      min-width: 1.5rem;
+    }
+
+    .detail-content {
+      flex: 1;
+    }
+
+    .detail-label {
+      font-weight: 600; /* font-semibold */
+      color: #075985; /* text-sky-800 */
+      font-size: 0.875rem; /* text-sm */
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .detail-value {
+      color: #374151; /* text-gray-700 */
+      font-weight: 500; /* font-medium */
+      font-size: 1rem; /* text-base */
+    }
+
+    .doctor-section {
+      background: linear-gradient(135deg, #ecfdf5, #d1fae5); /* emerald gradient */
+      border: 2px solid #10b981; /* border-2 border-emerald-500 */
+      padding: 2rem; /* p-8 */
+      border-radius: 0.75rem; /* rounded-xl */
+      margin: 2rem 0; /* my-8 */
+    }
+
+    .zoom-section {
+      background: linear-gradient(135deg, #fef3c7, #fde68a); /* amber gradient */
+      border: 2px solid #f59e0b; /* border-2 border-amber-500 */
+      padding: 2rem; /* p-8 */
+      border-radius: 0.75rem; /* rounded-xl */
+      margin: 2rem 0; /* my-8 */
+    }
+
+    .preparation-section {
+      background: linear-gradient(135deg, #fdf2f8, #fce7f3); /* pink gradient */
+      border: 2px solid #ec4899; /* border-2 border-pink-500 */
+      padding: 2rem; /* p-8 */
+      border-radius: 0.75rem; /* rounded-xl */
+      margin: 2rem 0; /* my-8 */
+    }
+
+    .zoom-link {
+      color: #ffffff; /* text-white */
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+      text-decoration: none;
+      font-weight: 600; /* font-semibold */
+      word-break: break-all;
+      padding: 1rem 1.5rem; /* px-6 py-4 */
+      border-radius: 0.75rem; /* rounded-xl */
+      display: inline-block;
+      margin-top: 1rem;
+      box-shadow: 0 4px 14px 0 rgba(14, 165, 233, 0.3);
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .zoom-link:hover {
+      background: linear-gradient(135deg, #0284c7, #0891b2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem; /* mb-6 */
+      font-size: 1.25rem; /* text-xl */
+      font-weight: 600; /* font-semibold */
+    }
+
+    .section-icon {
+      margin-right: 0.75rem; /* mr-3 */
+      font-size: 1.5rem; /* text-2xl */
+    }
+
+    .footer-section {
+      background: linear-gradient(135deg, #f9fafb, #f3f4f6); /* gray gradient */
+      padding: 2rem; /* p-8 */
+      border-top: 1px solid #e5e7eb; /* border-t border-gray-200 */
+      text-align: center;
+    }
+
+    .footer-logo {
+      height: 2.5rem; /* h-10 */
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem; /* px-4 py-2 */
+      background: linear-gradient(135deg, #10b981, #059669); /* emerald gradient */
+      color: #ffffff;
+      border-radius: 9999px; /* rounded-full */
+      font-size: 0.875rem; /* text-sm */
+      font-weight: 600; /* font-semibold */
+      margin-bottom: 1rem;
+    }
+
+    .preparation-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .preparation-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 0.5rem;
+      border-left: 3px solid #ec4899;
+    }
+
+    .preparation-icon {
+      color: #ec4899;
+      margin-right: 0.75rem;
+      margin-top: 0.25rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .content-padding { padding: 1.5rem; }
+      .appointment-card { padding: 1.5rem; }
+      .doctor-section { padding: 1.5rem; }
+      .zoom-section { padding: 1.5rem; }
+      .preparation-section { padding: 1.5rem; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <!-- Header with gradient and logo -->
+      <div class="header-gradient">
+        <div class="flex-center mb-4">
+          <img src="https://medeaseapi.onrender.com/Medease-logo.png" alt="MedEase Logo" class="logo"
+               onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/0ea5e9?text=MedEase';">
+        </div>
+        <h1 class="text-white text-center text-3xl font-bold mb-4">🩺 Appointment Reminder</h1>
+        <div class="welcome-badge">
+          <i class="fas fa-heart" style="margin-right: 0.5rem;"></i>
+          Your Health Matters
+        </div>
+      </div>
+      
+      <!-- Content -->
+      <div class="content-padding">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl font-semibold text-gray-800 mb-4">Hello <%= patientName %>!</h2>
+          <p class="text-lg text-gray-600">
+            We're looking forward to seeing you today. Your healthcare appointment is scheduled and ready!
+          </p>
+        </div>
+
+        <!-- Appointment Details Card -->
+        <div class="appointment-card">
+          <div class="section-title text-sky-800">
+            <i class="fas fa-calendar-check section-icon text-sky-600"></i>
+            Your Appointment Details
+          </div>
+          
+          <div class="detail-grid">
+            <div class="detail-item">
+              <i class="fas fa-calendar-day detail-icon"></i>
+              <div class="detail-content">
+                <span class="detail-label">Date</span>
+                <span class="detail-value"><%= appointmentDate %></span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-clock detail-icon"></i>
+              <div class="detail-content">
+                <span class="detail-label">Time</span>
+                <span class="detail-value"><%= appointmentTime %></span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-hourglass-half detail-icon"></i>
+              <div class="detail-content">
+                <span class="detail-label">Duration</span>
+                <span class="detail-value"><%= duration %> minutes</span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-notes-medical detail-icon"></i>
+              <div class="detail-content">
+                <span class="detail-label">Appointment Type</span>
+                <span class="detail-value"><%= appointmentTitle %></span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-info-circle detail-icon"></i>
+              <div class="detail-content">
+                <span class="detail-label">Status</span>
+                <span class="detail-value" style="text-transform: capitalize;"><%= status %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doctor Information -->
+        <div class="doctor-section">
+          <div class="section-title text-emerald-800">
+            <i class="fas fa-user-md section-icon text-emerald-600"></i>
+            Your Healthcare Provider
+          </div>
+          
+          <div class="detail-grid">
+            <div class="detail-item" style="background-color: rgba(236, 253, 245, 0.8);">
+              <i class="fas fa-stethoscope detail-icon text-emerald-600"></i>
+              <div class="detail-content">
+                <span class="detail-label">Doctor</span>
+                <span class="detail-value">Dr. <%= doctorName %></span>
+              </div>
+            </div>
+            
+            <div class="detail-item" style="background-color: rgba(236, 253, 245, 0.8);">
+              <i class="fas fa-graduation-cap detail-icon text-emerald-600"></i>
+              <div class="detail-content">
+                <span class="detail-label">Specialization</span>
+                <span class="detail-value"><%= doctorSpecialization %></span>
+              </div>
+            </div>
+            
+            <div class="detail-item" style="background-color: rgba(236, 253, 245, 0.8);">
+              <i class="fas fa-award detail-icon text-emerald-600"></i>
+              <div class="detail-content">
+                <span class="detail-label">Experience</span>
+                <span class="detail-value"><%= doctorExperience %> years</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Virtual Meeting Access -->
+        <div class="zoom-section">
+          <div class="section-title text-amber-800">
+            <i class="fas fa-video section-icon text-amber-600"></i>
+            Virtual Appointment Access
+          </div>
+          
+          <p class="text-gray-700 mb-4">
+            <strong>Easy Access:</strong> Join your virtual consultation with just one click!
+          </p>
+          
+          <div style="background-color: rgba(255, 255, 255, 0.9); padding: 1.5rem; border-radius: 0.75rem; text-align: center; border: 2px dashed #f59e0b;">
+            <p class="text-base text-gray-700 mb-4">
+              <i class="fas fa-laptop" style="color: #f59e0b; margin-right: 0.5rem;"></i>
+              <strong>Ready to join your consultation?</strong>
+            </p>
+            <a href="<%= userUrl %>" class="zoom-link">
+              <i class="fas fa-video" style="margin-right: 0.75rem;"></i>
+              Join Virtual Consultation
+            </a>
+          </div>
+          
+          <p class="text-sm text-gray-600 mt-4">
+            <i class="fas fa-info-circle" style="color: #f59e0b; margin-right: 0.5rem;"></i>
+            <em>Click the button at your appointment time. We recommend joining 2-3 minutes early.</em>
+          </p>
+        </div>
+
+        <!-- Preparation Tips -->
+        <div class="preparation-section">
+          <div class="section-title text-purple-800">
+            <i class="fas fa-clipboard-check section-icon" style="color: #ec4899;"></i>
+            Preparation Checklist
+          </div>
+          
+          <ul class="preparation-list">
+            <li class="preparation-item">
+              <i class="fas fa-wifi preparation-icon"></i>
+              <span class="text-gray-700">Ensure you have a stable internet connection</span>
+            </li>
+            <li class="preparation-item">
+              <i class="fas fa-volume-up preparation-icon"></i>
+              <span class="text-gray-700">Find a quiet, private space for your consultation</span>
+            </li>
+            <li class="preparation-item">
+              <i class="fas fa-file-medical preparation-icon"></i>
+              <span class="text-gray-700">Have your medical history and current medications ready</span>
+            </li>
+            <li class="preparation-item">
+              <i class="fas fa-question-circle preparation-icon"></i>
+              <span class="text-gray-700">Prepare any questions you'd like to ask your doctor</span>
+            </li>
+            <li class="preparation-item">
+              <i class="fas fa-camera preparation-icon"></i>
+              <span class="text-gray-700">Test your camera and microphone beforehand</span>
+            </li>
+            <li class="preparation-item">
+              <i class="fas fa-id-card preparation-icon"></i>
+              <span class="text-gray-700">Have your insurance card and ID ready</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Important Notice -->
+        <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); padding: 2rem; border-radius: 0.75rem; text-align: center; margin: 2rem 0; border: 2px solid #93c5fd;">
+          <h3 class="text-xl font-semibold text-sky-800 mb-4">
+            <i class="fas fa-exclamation-triangle" style="color: #f59e0b; margin-right: 0.5rem;"></i>
+            Need to Reschedule?
+          </h3>
+          <p class="text-gray-700 mb-4">
+            If you need to reschedule or cancel, please contact us at least 24 hours in advance.
+          </p>
+          <p class="text-sm text-gray-600">
+            <strong>Support:</strong> 
+            <a href="mailto:support@medease.com" style="color: #0ea5e9; font-weight: 600;">support@medease.com</a>
+            <br>
+            <strong>Emergency:</strong> Call our 24/7 emergency hotline
+          </p>
+        </div>
+
+        <div class="text-center">
+          <p class="text-lg text-gray-700 font-medium">
+            We're committed to providing you with the best healthcare experience possible! 💙
+          </p>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="footer-section">
+        <div class="flex-center mb-4">
+          <img src="https://medeaseapi.onrender.com/Medease-logo.png" alt="MedEase Logo" class="footer-logo"
+               onerror="this.onerror=null; this.src='https://via.placeholder.com/100x40/6b7280/ffffff?text=MedEase';">
+        </div>
+        <p class="text-gray-600 text-sm mb-2">MedEase Healthcare Management System</p>
+        <p class="text-gray-500 text-sm">
+          Your Health, Our Priority | HIPAA Compliant & Secure
+        </p>
+        <p class="text-gray-400 text-sm mt-4">
+          &copy; <%= new Date().getFullYear() %> MedEase. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

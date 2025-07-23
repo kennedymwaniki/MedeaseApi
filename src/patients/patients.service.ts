@@ -40,14 +40,26 @@ export class PatientsService {
 
   findAll() {
     return this.patientRepository.find({
-      relations: ['user'],
+      relations: {
+        user: true, // Only load user info
+      },
     });
   }
 
   findOne(id: number) {
     return this.patientRepository.findOne({
       where: { id },
-      relations: ['user'],
+      relations: {
+        user: true,
+        appointments: true,
+        medicalHistories: true,
+        prescriptions: {
+          doctor: {
+            user: true,
+          },
+          medication: true,
+        },
+      },
     });
   }
 

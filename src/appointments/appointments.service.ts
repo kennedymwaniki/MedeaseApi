@@ -82,14 +82,21 @@ export class AppointmentsService {
 
   findAll() {
     return this.appointmentsRepository.find({
-      relations: ['patient', 'doctor'],
+      relations: {
+        patient: true,
+        doctor: true,
+      },
     });
   }
 
   findOne(id: number) {
     return this.appointmentsRepository.findOne({
       where: { id },
-      relations: ['patient', 'doctor'],
+      relations: {
+        patient: {
+          user: true,
+        },
+      },
     });
   }
 
@@ -120,7 +127,14 @@ export class AppointmentsService {
       where: {
         date: todayString,
       },
-      relations: ['patient', 'doctor'],
+      relations: {
+        patient: {
+          user: true,
+        },
+        doctor: {
+          user: true,
+        },
+      },
     });
   }
 }
