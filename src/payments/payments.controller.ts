@@ -47,10 +47,18 @@ export class PaymentsController {
 
   @Post('/paystack-push')
   @Public()
-  paystackPush(@Body() paystackDto: { email: string; amount: number }) {
+  paystackPush(
+    @Body()
+    paystackDto: {
+      email: string;
+      amount: number;
+      prescriptionId: number;
+    },
+  ) {
     return this.paymentsService.paystackPush(
       paystackDto.email,
       paystackDto.amount,
+      paystackDto.prescriptionId,
     );
   }
 

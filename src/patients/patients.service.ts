@@ -41,7 +41,7 @@ export class PatientsService {
   findAll() {
     return this.patientRepository.find({
       relations: {
-        user: true, // Only load user info
+        user: true,
       },
     });
   }
@@ -59,6 +59,7 @@ export class PatientsService {
           },
           medication: true,
         },
+        payments: true,
       },
     });
   }

@@ -14,6 +14,8 @@ import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { REQUEST } from '@nestjs/core';
 import { PrescriptionsService } from 'src/prescriptions/prescriptions.service';
+import { UsersService } from 'src/users/users.service';
+import { PaymentStatus } from './paymentStatus';
 @Injectable()
 export class PaymentsService {
   url =
@@ -28,6 +30,7 @@ export class PaymentsService {
 
     private readonly patientsService: PatientsService,
     private readonly prescriptionsService: PrescriptionsService,
+    private readonly usersService: UsersService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -45,13 +48,21 @@ export class PaymentsService {
       throw new BadRequestException('Prescription not found');
     }
 
-    const payment = this.paymentsRepository.create(createPaymentDto);
+    const payment = this.paymentsRepository.create({
+      ...createPaymentDto,
+      patient,
+      prescription,
+    });
+    console.log('Payments created successfully now to saving ....:', payment);
     return this.paymentsRepository.save(payment);
   }
 
   findAll() {
     return this.paymentsRepository.find({
-      relations: ['patient', 'prescription'],
+      relations: {
+        patient: true,
+        prescription: true,
+      },
     });
   }
 
@@ -164,7 +175,7 @@ export class PaymentsService {
     }
   }
 
-  async paystackPush(email: string, amount: number) {
+  async paystackPush(email: string, amount: number, prescriptionId: number) {
     const PAYSTACKURL = 'https://api.paystack.co/transaction/initialize';
     const headers = {
       Authorization: `Bearer ${this.configService.get('PAYSTACK_SECRET_KEY')}`,
@@ -175,16 +186,47 @@ export class PaymentsService {
       this.request.protocol + '://' + this.request.headers.host + '/';
 
     const newUrl = new URL(this.request.url, baseUrl);
+
+    // Get user by email to get patient ID
+    const user = await this.usersService.findUserByEmail(email);
+    if (!user || !user.patient) {
+      throw new BadRequestException('Patient not found for this email');
+    }
+
+    const prescription =
+      await this.prescriptionsService.findOne(prescriptionId);
+    if (!prescription) {
+      throw new BadRequestException('Prescription not found');
+    }
+
     const data = {
       email: email,
       amount: amount * 100,
       currency: 'KES',
       callback_url: `${newUrl.origin}/payments/paystack-callback`,
-      metadata: {},
+      metadata: {
+        prescriptionId: prescriptionId,
+        patientId: user.patient.id,
+        originalAmount: amount,
+      },
     };
+
     try {
       const response = await axios.post(PAYSTACKURL, data, { headers });
-      console.log('Paystack response:', response.data);
+      // console.log('Paystack response:', response.data);
+
+      const paymentDto: CreatePaymentDto = {
+        amount: amount,
+        method: 'Paystack',
+        status: PaymentStatus.PENDING,
+        paymentDate: new Date(),
+        transactionId: response.data.data.reference,
+        patientId: user.patient.id,
+        prescriptionId: prescriptionId,
+      };
+
+      await this.create(paymentDto);
+
       return {
         message: 'Payment initialized successfully',
         data: response.data,
@@ -203,7 +245,6 @@ export class PaymentsService {
     };
     try {
       const response = await axios.get(PAYSTACKURL, { headers });
-      console.log('Paystack verification response:', response.data);
 
       return response.data;
     } catch (error) {
@@ -216,21 +257,74 @@ export class PaymentsService {
     console.log('Received callback body:', body);
     const trxref = body.trxref;
     console.log('Received trxref:', trxref);
+
     try {
       const verificationResponse = await this.verifyPaystackTransaction(trxref);
-      if (verificationResponse.status) {
-        console.log('Payment verification successful:', verificationResponse);
+
+      if (
+        verificationResponse.status &&
+        verificationResponse.data.status === 'success'
+      ) {
+        const payment = await this.paymentsRepository.findOne({
+          where: { transactionId: trxref },
+          relations: ['prescription'],
+        });
+
+        if (!payment) {
+          console.log('Payment record not found for transaction ID:', trxref);
+          throw new BadRequestException('Payment record not found');
+        }
+
+        await this.paymentsRepository.update(payment.id, {
+          status: PaymentStatus.COMPLETED,
+          paymentDate: new Date(),
+        });
+
+        if (payment.prescription) {
+          await this.prescriptionsService.update(payment.prescription.id, {
+            isPaid: true,
+          });
+        }
+
         return {
           message: 'Payment successful',
           data: verificationResponse.data,
         };
       } else {
-        return { message: 'Payment failed', data: verificationResponse };
+        const payment = await this.paymentsRepository.findOne({
+          where: { transactionId: trxref },
+        });
+
+        if (payment) {
+          await this.paymentsRepository.update(payment.id, {
+            status: PaymentStatus.FAILED,
+          });
+        }
+
+        return {
+          message: 'Payment failed',
+          data: verificationResponse,
+        };
       }
     } catch (error) {
       console.log(error);
+
+      try {
+        const payment = await this.paymentsRepository.findOne({
+          where: { transactionId: trxref },
+        });
+
+        if (payment) {
+          await this.paymentsRepository.update(payment.id, {
+            status: PaymentStatus.FAILED,
+          });
+        }
+      } catch (updateError) {
+        console.log('Error updating payment status:', updateError);
+      }
+
       return {
-        message: 'BadRequestException processing payment',
+        message: 'Error processing payment',
         error: error.message,
       };
     }

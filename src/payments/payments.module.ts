@@ -5,6 +5,7 @@ import { PrescriptionsModule } from 'src/prescriptions/prescriptions.module';
 import { Payment } from './entities/payment.entity';
 import { PaymentsController } from './payments.controller';
 import { PaymentsService } from './payments.service';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   controllers: [PaymentsController],
@@ -12,6 +13,7 @@ import { PaymentsService } from './payments.service';
   imports: [
     PrescriptionsModule,
     PatientsModule,
+    UsersModule,
     TypeOrmModule.forFeature([Payment]),
   ],
 })

@@ -1,9 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDateString,
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
 } from 'class-validator';
@@ -33,6 +35,14 @@ export class CreatePrescriptionDto {
   @IsString()
   @IsNotEmpty()
   dosage: string;
+
+  @ApiPropertyOptional({
+    description: 'Payment status of the prescription',
+    example: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isPaid?: boolean;
 
   @ApiProperty({
     description: 'Status of the prescription',
