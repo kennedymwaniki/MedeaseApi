@@ -54,6 +54,7 @@ export class DoctorsService {
           patient: true,
           medication: true,
         },
+        appointments: true,
       },
     });
   }

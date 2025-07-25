@@ -199,7 +199,7 @@ POST http://localhost:8000/payments/paystack-push
 Content-Type: application/json
 
 {
-  "email": "patient.wilson@medease.com",
+  "email": "kennedymk123@gmail.com",
   "amount": 10
 }
 
