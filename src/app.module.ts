@@ -58,8 +58,8 @@ import { LoggerMiddleware } from './logger.middleware';
         database: configService.get<string>('DATABASE_NAME'),
         autoLoadEntities: true, // Automatically load entities
         synchronize: true, // Set to false in production
-        // ssl: true,
-        // PGSSLMODE: 'require',
+        ssl: true,
+        PGSSLMODE: 'require',
       }),
     }),
 
