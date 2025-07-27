@@ -21,6 +21,8 @@ import { UploadsModule } from './uploads/uploads.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guards/AccessTokenGuard';
 // import { ChatModule } from './chat/chat.module';
+// import { PushNotificationsModule } from './push-notifications/push-notifications.module';
+import { PushNotificationsModule } from './push-notifications/push-notifications.module';
 import { LogsModule } from './logs/logs.module';
 import { DoctorTimeSlotModule } from './doctor-time-slot/doctor-time-slot.module';
 import { LoggerMiddleware } from './logger.middleware';
@@ -58,8 +60,8 @@ import { LoggerMiddleware } from './logger.middleware';
         database: configService.get<string>('DATABASE_NAME'),
         autoLoadEntities: true, // Automatically load entities
         synchronize: true, // Set to false in production
-        ssl: true,
-        PGSSLMODE: 'require',
+        // ssl: true,
+        // PGSSLMODE: 'require',
       }),
     }),
 
@@ -70,6 +72,8 @@ import { LoggerMiddleware } from './logger.middleware';
     DoctorTimeSlotModule,
 
     LogsModule,
+
+    PushNotificationsModule,
 
     // ChatModule,
   ],

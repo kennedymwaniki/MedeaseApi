@@ -51,7 +51,11 @@ export class PatientsService {
       where: { id },
       relations: {
         user: true,
-        appointments: true,
+        appointments: {
+          doctor: {
+            user: true,
+          },
+        },
         medicalHistories: true,
         prescriptions: {
           doctor: {

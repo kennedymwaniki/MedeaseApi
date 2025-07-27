@@ -6,6 +6,7 @@ import { AppointmentsController } from './appointments.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Appointment } from './entities/appointment.entity';
 import { ZoomService } from 'src/zoom/zoomService';
+import { PushNotificationsModule } from 'src/push-notifications/push-notifications.module';
 
 @Module({
   controllers: [AppointmentsController],
@@ -13,6 +14,7 @@ import { ZoomService } from 'src/zoom/zoomService';
   imports: [
     PatientsModule,
     DoctorsModule,
+    PushNotificationsModule,
     TypeOrmModule.forFeature([Appointment]),
   ],
   exports: [AppointmentsService],

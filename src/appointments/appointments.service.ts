@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PatientsService } from './../patients/patients.service';
 import { DoctorsService } from '../doctors/doctors.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { Repository } from 'typeorm';
 import { Appointment } from './entities/appointment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ZoomService } from 'src/zoom/zoomService';
+import { PushNotificationsService } from 'src/push-notifications/push-notifications.service';
 // import { ZoomService } from 'src/zoom/zoomService';
 
 @Injectable()
@@ -18,6 +23,7 @@ export class AppointmentsService {
     private readonly patientsService: PatientsService,
     private readonly doctorsService: DoctorsService,
     private readonly zoomService: ZoomService,
+    private readonly pushNotificationsService: PushNotificationsService,
   ) {}
 
   async create(createAppointmentDto: CreateAppointmentDto) {
@@ -75,6 +81,63 @@ export class AppointmentsService {
     } catch (error) {
       await this.appointmentsRepository.delete(savedAppointment.id);
       throw new NotFoundException('Time slot not available');
+    }
+
+    try {
+      // Create consistent notification payloads for both doctor and patient
+      const doctorNotificationPayload = {
+        title: 'New Appointment Scheduled',
+        body: `${patient.name || patient.user.email} has scheduled an appointment with you on ${createAppointmentDto.date} at ${createAppointmentDto.time}`,
+        icon: '/assets/icons/appointment-icon.png',
+        data: {
+          appointmentId: savedAppointment.id,
+          type: 'new_appointment',
+        },
+      };
+
+      const patientNotificationPayload = {
+        title: 'Appointment Confirmed',
+        body: `Your appointment with Dr. ${doctor.user.firstname} ${doctor.user.lastname} on ${createAppointmentDto.date} at ${createAppointmentDto.time} has been confirmed.`,
+        icon: '/assets/icons/appointment-icon.png',
+        data: {
+          appointmentId: savedAppointment.id,
+          type: 'appointment_confirmation',
+        },
+      };
+
+      // Send notifications
+      const patientResult =
+        await this.pushNotificationsService.sendNotificationToUser(
+          patient.user.id,
+          patientNotificationPayload,
+        );
+
+      const doctorResult =
+        await this.pushNotificationsService.sendNotificationToUser(
+          doctor.user.id,
+          doctorNotificationPayload,
+        );
+
+      console.log('Push notification results:', {
+        patient: patientResult,
+        doctor: doctorResult,
+      });
+
+      return {
+        message:
+          'Appointment created and push notification sent to both doctor and patient',
+        notificationResults: {
+          patient: patientResult,
+          doctor: doctorResult,
+        },
+      };
+    } catch (error) {
+      console.error('Failed to send push notification:', error);
+      // Don't fail the appointment creation if notification fails
+      return {
+        message: 'Appointment created but push notification failed',
+        appointment: savedAppointment,
+      };
     }
 
     return savedAppointment;
