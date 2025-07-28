@@ -146,8 +146,12 @@ export class AppointmentsService {
   findAll() {
     return this.appointmentsRepository.find({
       relations: {
-        patient: true,
-        doctor: true,
+        patient: {
+          user: true,
+        },
+        doctor: {
+          user: true,
+        },
       },
     });
   }

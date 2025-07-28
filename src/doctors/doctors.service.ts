@@ -49,12 +49,20 @@ export class DoctorsService {
     return this.doctorRepository.findOne({
       where: { id },
       relations: {
-        user: true,
+        user: {
+          doctor: true,
+        },
         prescriptions: {
-          patient: true,
+          patient: {
+            user: true,
+          },
           medication: true,
         },
-        appointments: true,
+        appointments: {
+          patient: {
+            user: true,
+          },
+        },
       },
     });
   }

@@ -114,7 +114,10 @@ export class UsersService {
 
   findAll() {
     return this.userRepository.find({
-      relations: ['patient', 'doctor'],
+      relations: {
+        patient: true,
+        doctor: true,
+      },
     });
   }
 
@@ -133,7 +136,10 @@ export class UsersService {
         doctor: true,
         patient: true,
       },
-      relations: ['patient', 'doctor'],
+      relations: {
+        patient: true,
+        doctor: true,
+      },
     });
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
