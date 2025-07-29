@@ -221,7 +221,6 @@ export class AuthService {
       throw new BadRequestException('Invalid OTP');
     }
 
-    // Add logic to actually reset the password
     if (body.password) {
       await this.usersService.update(id, {
         password: body.password,

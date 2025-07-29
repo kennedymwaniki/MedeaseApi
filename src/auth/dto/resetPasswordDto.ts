@@ -23,4 +23,11 @@ export class ResetPasswordDto extends PartialType(CreateUserDto) {
   })
   @IsOptional()
   secret?: string;
+
+  @ApiProperty({
+    description: 'New password for the user',
+    example: 'newpassword123',
+  })
+  @IsOptional()
+  password?: string;
 }
