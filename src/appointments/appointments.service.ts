@@ -13,6 +13,7 @@ import { Appointment } from './entities/appointment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ZoomService } from 'src/zoom/zoomService';
 import { PushNotificationsService } from 'src/push-notifications/push-notifications.service';
+import { MailService } from 'src/mail/mail.service';
 // import { ZoomService } from 'src/zoom/zoomService';
 
 @Injectable()
@@ -24,6 +25,7 @@ export class AppointmentsService {
     private readonly doctorsService: DoctorsService,
     private readonly zoomService: ZoomService,
     private readonly pushNotificationsService: PushNotificationsService,
+    private readonly mailService: MailService,
   ) {}
 
   async create(createAppointmentDto: CreateAppointmentDto) {
@@ -105,7 +107,42 @@ export class AppointmentsService {
         },
       };
 
-      // Send notifications
+      // Send email reminders
+      const appointmentData = {
+        doctor: {
+          user: {
+            email: doctor.user.email,
+            firstname: doctor.user.firstname,
+            lastname: doctor.user.lastname,
+          },
+          specialization: doctor.specialization || '',
+          experience: doctor.experience || 0, // Ensure it's a number
+        },
+        date: createAppointmentDto.date,
+        time: createAppointmentDto.time,
+        duration: createAppointmentDto.duration,
+        title: createAppointmentDto.title,
+        status: savedAppointment.status,
+        admin_url: savedAppointment.admin_url || '',
+        user_url: savedAppointment.user_url || '',
+        patient: {
+          name: patient.name || '',
+          age: patient.age || 0,
+          gender: patient.gender || '',
+          contact: patient.contact || '',
+          user: {
+            email: patient.user.email,
+          },
+        },
+      };
+
+      // Send emails in parallel
+      await Promise.all([
+        this.mailService.sendAppointmentReminderToDoctor(appointmentData),
+        this.mailService.sendAppointmentReminderToPatient(appointmentData),
+      ]);
+
+      // Send push notifications
       const patientResult =
         await this.pushNotificationsService.sendNotificationToUser(
           patient.user.id,
@@ -125,17 +162,17 @@ export class AppointmentsService {
 
       return {
         message:
-          'Appointment created and push notification sent to both doctor and patient',
+          'Appointment created and notifications sent to both doctor and patient',
         notificationResults: {
           patient: patientResult,
           doctor: doctorResult,
         },
       };
     } catch (error) {
-      console.error('Failed to send push notification:', error);
+      console.error('Failed to send notifications:', error);
       // Don't fail the appointment creation if notification fails
       return {
-        message: 'Appointment created but push notification failed',
+        message: 'Appointment created but notification sending failed',
         appointment: savedAppointment,
       };
     }

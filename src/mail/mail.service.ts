@@ -11,18 +11,18 @@ interface appointmentData {
       lastname: string;
     };
     specialization: string;
-    experience: string;
+    experience: number; // Changed from string to number
   };
   date: string;
   time: string;
-  duration: string;
+  duration: number; // Also should be number, not string
   title: string;
   status: string;
   admin_url: string;
   user_url: string;
   patient: {
     name: string;
-    age: string;
+    age: number; // Changed from string to number
     gender: string;
     contact: string;
     user: {
