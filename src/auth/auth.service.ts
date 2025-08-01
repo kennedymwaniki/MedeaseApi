@@ -204,22 +204,18 @@ export class AuthService {
     console.log('user in resetPassword', {
       secret: user.secret,
       otp: otp,
+      storedOtp: user.otp,
     });
 
     const id = user.id;
 
-    const isValidOtp = speakeasy.totp.verify({
-      secret: user.secret,
-      encoding: 'base32',
-      token: otp!,
-      step: 240,
-      digits: 6,
-      window: 0,
-    });
-
-    if (!isValidOtp) {
+    // Direct comparison instead of TOTP verification
+    if (user.otp !== otp) {
       throw new BadRequestException('Invalid OTP');
     }
+
+    // Optional: Add time-based expiration check
+    // You could store a timestamp when OTP was generated and check if it's still valid
 
     if (body.password) {
       await this.usersService.update(id, {
